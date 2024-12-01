@@ -1,0 +1,52 @@
+# Archivos de compilación
+bin/
+obj/
+
+# Archivos de configuración de Visual Studio
+.vs/
+.vscode/
+
+# Archivos de usuario específicos
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Archivos generados por el compilador
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.app
+
+# Archivos de NuGet
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+packages/
+
+# Archivos temporales y de caché
+*.cache
+*.log
+*.tmp
+
+# Archivos de configuración de Rider
+.idea/
+
+# Archivos de configuración de Windows
+Thumbs.db
+Desktop.ini
+
+# Archivos de JetBrains ReSharper
+_ReSharper/
+
+# Archivos de Visual Studio Code
+.vscode/
+
+# Archivos de dependencias
+node_modules/
+
+# Otros
+*.sublime-workspace
+*.sublime-project
+.fake
