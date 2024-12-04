@@ -14,9 +14,14 @@ namespace Csharp1
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Variables y tipos de datos
+            string Nombre = "Juan Sebastián"; //texto
+
+            MessageBox.Show(Nombre); //mostrar el contenido de la variable
+
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new Form1()); //Ejecuta el formulario principal
         }
     }
 }
