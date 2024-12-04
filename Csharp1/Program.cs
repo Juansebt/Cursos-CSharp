@@ -14,6 +14,7 @@ namespace Csharp1
         [STAThread]
         static void Main()
         {
+            /*
             //Variables y tipos de datos
             string Nombre = "Juan Sebastián"; //texto
 
@@ -33,15 +34,16 @@ namespace Csharp1
 
             const string Dato = "Hola soy Juanse"; //constante - no se puede cambiar la información guardada en la variable
 
-            //MessageBox.Show(Nombre); //mostrar el contenido de la variables cuyo contenido es texto
-            //MessageBox.Show(Num1.ToString()); //conversión de int a string
-            //MessageBox.Show(Acceso.ToString()); //mostrar el contenido de la variable booleana
-            //MessageBox.Show(Fecha.ToShortDateString().ToString()); //mostrar la  en formato corto
+            MessageBox.Show(Nombre); //mostrar el contenido de la variables cuyo contenido es texto
+            MessageBox.Show(Num1.ToString()); //conversión de int a string
+            MessageBox.Show(Acceso.ToString()); //mostrar el contenido de la variable booleana
+            MessageBox.Show(Fecha.ToShortDateString().ToString()); //mostrar la  en formato corto
             MessageBox.Show(Dato);
+            */
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1()); //Ejecuta el formulario principal
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1()); //Ejecuta el formulario principal
         }
     }
 }
