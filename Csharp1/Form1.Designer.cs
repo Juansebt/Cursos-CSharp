@@ -30,41 +30,42 @@
         {
             this.btnOk = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblBienvenido = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.lblTexto = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(229, 384);
+            this.btnOk.Location = new System.Drawing.Point(250, 375);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 38);
+            this.btnOk.Size = new System.Drawing.Size(75, 47);
             this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "Ok";
+            this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.button1_Click);
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnClose
             // 
             this.btnClose.BackColor = System.Drawing.Color.Red;
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(114, 384);
+            this.btnClose.Location = new System.Drawing.Point(110, 375);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 38);
+            this.btnClose.Size = new System.Drawing.Size(100, 47);
             this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "Close";
+            this.btnClose.Text = "CERRAR";
             this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.button1_Click_1);
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // label1
+            // lblBienvenido
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 93);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Bienvenido:";
+            this.lblBienvenido.AutoSize = true;
+            this.lblBienvenido.Location = new System.Drawing.Point(17, 93);
+            this.lblBienvenido.Name = "lblBienvenido";
+            this.lblBienvenido.Size = new System.Drawing.Size(91, 20);
+            this.lblBienvenido.TabIndex = 2;
+            this.lblBienvenido.Text = "Bienvenido:";
             // 
             // txtNombre
             // 
@@ -73,27 +74,37 @@
             this.txtNombre.Size = new System.Drawing.Size(296, 26);
             this.txtNombre.TabIndex = 3;
             // 
-            // label2
+            // lblTitulo
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(119, 39);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(206, 20);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "MI PRIMER FORMULARIO";
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Location = new System.Drawing.Point(119, 39);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(206, 20);
+            this.lblTitulo.TabIndex = 4;
+            this.lblTitulo.Text = "MI PRIMER FORMULARIO";
+            // 
+            // lblTexto
+            // 
+            this.lblTexto.AutoSize = true;
+            this.lblTexto.Location = new System.Drawing.Point(66, 221);
+            this.lblTexto.Name = "lblTexto";
+            this.lblTexto.Size = new System.Drawing.Size(29, 20);
+            this.lblTexto.TabIndex = 5;
+            this.lblTexto.Text = ". . .";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(443, 450);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblTexto);
+            this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.txtNombre);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblBienvenido);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnOk);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Mi Formulario";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -103,9 +114,10 @@
 
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblBienvenido;
         private System.Windows.Forms.TextBox txtNombre;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Label lblTexto;
     }
 }
 

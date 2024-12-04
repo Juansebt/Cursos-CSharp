@@ -17,14 +17,16 @@ namespace Csharp1
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
-
+            Application.Exit(); //cerrar la ventana
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btnOk_Click(object sender, EventArgs e)
         {
+            string textoDelTexBox = txtNombre.Text; //traer lo que tiene el textBox
 
+            lblTexto.Text = "Bienvenido a mi primer formulario " + textoDelTexBox;
         }
     }
 }
