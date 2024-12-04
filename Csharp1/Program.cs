@@ -31,10 +31,13 @@ namespace Csharp1
 
             DateTime Fecha = DateTime.Today; //Fechas
 
+            const string Dato = "Hola soy Juanse"; //constante - no se puede cambiar la información guardada en la variable
+
             //MessageBox.Show(Nombre); //mostrar el contenido de la variables cuyo contenido es texto
             //MessageBox.Show(Num1.ToString()); //conversión de int a string
             //MessageBox.Show(Acceso.ToString()); //mostrar el contenido de la variable booleana
-            MessageBox.Show(Fecha.ToShortDateString().ToString()); //mostrar la  en formato corto
+            //MessageBox.Show(Fecha.ToShortDateString().ToString()); //mostrar la  en formato corto
+            MessageBox.Show(Dato);
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
