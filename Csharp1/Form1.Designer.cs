@@ -1,4 +1,6 @@
-﻿namespace Csharp1
+﻿using System.Windows.Forms;
+
+namespace Csharp1
 {
     partial class Form1
     {
@@ -73,6 +75,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(296, 26);
             this.txtNombre.TabIndex = 3;
+            txtNombre.KeyPress += new KeyPressEventHandler(txtNombre_KeyPress);
             // 
             // lblTitulo
             // 
