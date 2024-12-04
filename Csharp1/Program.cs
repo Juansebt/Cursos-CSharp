@@ -24,6 +24,9 @@ namespace Csharp1
             decimal Num5 = 5020.506m; //números decimales grandes
             byte Num6 = 255; //número pequeño hasta 255
 
+            int Num7, Num8, Num9, Num10; //declarar varias variables del mismo tipo
+            Num7 = 12; Num8 = 13; Num9 = 14; Num10 = 15;
+
             bool Acceso = false; //booleano - verdadero o falso
 
             DateTime Fecha = DateTime.Today; //Fechas
