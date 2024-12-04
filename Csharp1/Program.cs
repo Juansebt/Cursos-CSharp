@@ -24,8 +24,14 @@ namespace Csharp1
             decimal Num5 = 5020.506m; //números decimales grandes
             byte Num6 = 255; //número pequeño hasta 255
 
-            MessageBox.Show(Nombre); //mostrar el contenido de la variables cuyo contenido es texto
-            MessageBox.Show(Num1.ToString()); //conversión de int a string
+            bool Acceso = false; //booleano - verdadero o falso
+
+            DateTime Fecha = DateTime.Today; //Fechas
+
+            //MessageBox.Show(Nombre); //mostrar el contenido de la variables cuyo contenido es texto
+            //MessageBox.Show(Num1.ToString()); //conversión de int a string
+            //MessageBox.Show(Acceso.ToString()); //mostrar el contenido de la variable booleana
+            MessageBox.Show(Fecha.ToShortDateString().ToString()); //mostrar la  en formato corto
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
