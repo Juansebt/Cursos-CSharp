@@ -24,7 +24,20 @@ namespace Csharp2
             numeros[3] = 4;
             numeros[4] = 5;
 
-            MessageBox.Show(numeros[0].ToString());
+            //MessageBox.Show("tamaño del arreglo: " + numeros.Length.ToString());
+
+            for (int i = 0; i < numeros.Length; i++) //recorrer un arreglo
+            {
+                //MessageBox.Show(numeros[i].ToString());
+            }
+
+            string[] posicion = new string[5];
+
+            for (int i = 0; i < posicion.Length; i++) //llenar un arreglo
+            {
+                posicion[i] = "mi posicion es: " + i.ToString();
+                MessageBox.Show(posicion[i].ToString());
+            }
 
 
             //blucles
