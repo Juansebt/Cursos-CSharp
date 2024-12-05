@@ -19,6 +19,17 @@ namespace Csharp2
             string var = "";
             int x = 0;
 
+            do
+            {
+                var += x.ToString() + " - ";
+                x++;
+            }
+            while (x > 10);
+
+            MessageBox.Show(var);
+
+            /*
+             * ciclo while
             while (x < 10)
             {
                 var += x.ToString() + " - ";
@@ -26,6 +37,7 @@ namespace Csharp2
             }
 
             MessageBox.Show(var);
+            */
 
             /*
              * ciclo foreach
