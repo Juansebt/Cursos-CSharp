@@ -24,20 +24,25 @@ namespace Csharp2
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            string user = txtUser.Text;
+            string password = txtPassword.Text;
+
             try
             {
-                string user = txtUser.Text;
-                string password = txtPassword.Text;
-
                 if (user.Equals("admin", StringComparison.OrdinalIgnoreCase) && password == "admin") //comparación insensible a mayúsculas y minúsculas
                 {
                     MessageBox.Show("¡Usuario correcto! Puedes pasar.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
                 }
                 else
                 {
                     MessageBox.Show("¡Usuario incorrecto! Intenta de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+                //operadores logicos
+                //if (user != "admin" || Convert.ToInt32(password) < 100) //diferente de admin o nérmo menor de 100
+                //{
+                //    return;
+                //}
             }
             catch (Exception ex)
             {

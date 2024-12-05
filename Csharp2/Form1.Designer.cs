@@ -82,7 +82,7 @@
             // 
             this.btnOk.Location = new System.Drawing.Point(249, 256);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(112, 50);
+            this.btnOk.Size = new System.Drawing.Size(186, 50);
             this.btnOk.TabIndex = 5;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -92,9 +92,9 @@
             // 
             this.btnClose.BackColor = System.Drawing.Color.Red;
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(96, 256);
+            this.btnClose.Location = new System.Drawing.Point(36, 256);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(112, 50);
+            this.btnClose.Size = new System.Drawing.Size(172, 50);
             this.btnClose.TabIndex = 6;
             this.btnClose.Text = "CERRAR";
             this.btnClose.UseVisualStyleBackColor = false;
