@@ -14,8 +14,23 @@ namespace Csharp2
         [STAThread]
         static void Main()
         {
+            // Vectores - Arreglos
+
+            int[] numeros = new int[5];
+
+            numeros[0] = 1;
+            numeros[1] = 2;
+            numeros[2] = 3;
+            numeros[3] = 4;
+            numeros[4] = 5;
+
+            MessageBox.Show(numeros[0].ToString());
+
+
             //blucles
 
+            /*
+             * ciclo do while
             string var = "";
             int x = 0;
 
@@ -27,6 +42,7 @@ namespace Csharp2
             while (x > 10);
 
             MessageBox.Show(var);
+            */
 
             /*
              * ciclo while
