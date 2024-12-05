@@ -32,13 +32,27 @@ namespace Csharp2
                 switch (user)
                 {
                     case "admin":
-                        MessageBox.Show("Escribiste admin, puedes pasar", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Escribiste admin, puedes pasar", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        switch (password)
+                        {
+                            case "admin":
+                                MessageBox.Show("Usuario administrador, puedes pasar", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+
+                            default:
+                                MessageBox.Show("Contraseña incorrecta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                        }
+
                         break;
+
                     case "juan":
                         MessageBox.Show("Escribiste juan, puedes ingresar", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
+
                     default:
-                        MessageBox.Show("Esa opción no es valida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Usuario incorrecto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                 }
 
