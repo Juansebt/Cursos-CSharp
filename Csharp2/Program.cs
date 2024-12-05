@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections; //referencia para el arraylist
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +15,24 @@ namespace Csharp2
         [STAThread]
         static void Main()
         {
+            //ArrayList - arreglo dinámico
+
+            ArrayList lista = new ArrayList();
+
+            lista.Add(1);
+            lista.Add("Juan");
+            lista.Add(345.21);
+            lista.Add(true);
+
+            foreach (var dato in lista)
+            {
+                MessageBox.Show(dato.ToString());
+            }
+
+
             // Matrices
 
+            /*
             int[,] matriz = new int[5,5];
 
             //rellenar la matriz
@@ -36,20 +53,19 @@ namespace Csharp2
                 }
             }
 
-            //int[,] numeros = new int[3, 5];
+            int[,] numeros = new int[3, 5];
 
-            //numeros[0, 0] = 1;
-            //numeros[0, 1] = 2;
-            //numeros[0, 2] = 3;
-            //numeros[0, 3] = 4;
-            //numeros[0, 4] = 5;
+            numeros[0, 0] = 1;
+            numeros[0, 1] = 2;
+            numeros[0, 2] = 3;
+            numeros[0, 3] = 4;
+            numeros[0, 4] = 5;
 
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    MessageBox.Show(numeros[0,i].ToString());
-            //}
-
-
+            for (int i = 0; i < 5; i++)
+            {
+                MessageBox.Show(numeros[0, i].ToString());
+            }
+            */
 
 
             // Vectores - Arreglos
