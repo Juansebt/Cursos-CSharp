@@ -16,8 +16,17 @@ namespace Csharp2
         {
             //blucles
 
-            string var = "";
+            //string var = "";
+            //int x = 0;
 
+            List<string> frutas = new List<string> { "Manzana", "Banana", "Cereza", "Mango" };
+
+            foreach (string fruta in frutas)
+            {
+                MessageBox.Show(fruta);
+            }
+
+            /*
             for (int i = 0; i < 10; i++)
             {
                 var += i.ToString();
@@ -30,8 +39,9 @@ namespace Csharp2
 
                 var += " - ";
             }
+            */
 
-            MessageBox.Show(var);
+            //MessageBox.Show(var);
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
