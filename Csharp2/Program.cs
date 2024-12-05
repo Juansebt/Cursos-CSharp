@@ -14,9 +14,16 @@ namespace Csharp2
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //blucles
+
+            for (int i = 0; i < 10; i++)
+            {
+                MessageBox.Show(i.ToString());
+            }
+
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new Form1());
         }
     }
 }
