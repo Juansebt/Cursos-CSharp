@@ -16,17 +16,29 @@ namespace Csharp2
         {
             //blucles
 
-            //string var = "";
-            //int x = 0;
+            string var = "";
+            int x = 0;
 
+            while (x < 10)
+            {
+                var += x.ToString() + " - ";
+                x++;
+            }
+
+            MessageBox.Show(var);
+
+            /*
+             * ciclo foreach
             List<string> frutas = new List<string> { "Manzana", "Banana", "Cereza", "Mango" };
 
             foreach (string fruta in frutas)
             {
                 MessageBox.Show(fruta);
             }
+            */
 
             /*
+             * ciclo for
             for (int i = 0; i < 10; i++)
             {
                 var += i.ToString();
@@ -39,9 +51,9 @@ namespace Csharp2
 
                 var += " - ";
             }
-            */
 
-            //MessageBox.Show(var);
+            MessageBox.Show(var);
+            */
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
