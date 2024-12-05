@@ -33,11 +33,15 @@
             this.lblNombre = new System.Windows.Forms.Label();
             this.txtNombres = new System.Windows.Forms.TextBox();
             this.listNombres = new System.Windows.Forms.ListBox();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.lblNuevoNombre = new System.Windows.Forms.Label();
+            this.txtNombreCambiar = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(49, 364);
+            this.btnOk.Location = new System.Drawing.Point(53, 451);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(139, 46);
             this.btnOk.TabIndex = 0;
@@ -47,7 +51,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(210, 364);
+            this.btnClose.Location = new System.Drawing.Point(214, 451);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(139, 46);
             this.btnClose.TabIndex = 1;
@@ -80,11 +84,51 @@
             this.listNombres.Size = new System.Drawing.Size(348, 224);
             this.listNombres.TabIndex = 4;
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(214, 382);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(139, 46);
+            this.btnDelete.TabIndex = 6;
+            this.btnDelete.Text = "ELIMINAR";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(53, 382);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(139, 46);
+            this.btnUpdate.TabIndex = 5;
+            this.btnUpdate.Text = "MODIFICAR";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // lblNuevoNombre
+            // 
+            this.lblNuevoNombre.AutoSize = true;
+            this.lblNuevoNombre.Location = new System.Drawing.Point(27, 326);
+            this.lblNuevoNombre.Name = "lblNuevoNombre";
+            this.lblNuevoNombre.Size = new System.Drawing.Size(142, 20);
+            this.lblNuevoNombre.TabIndex = 7;
+            this.lblNuevoNombre.Text = "Nombre a cambiar:";
+            // 
+            // txtNombreCambiar
+            // 
+            this.txtNombreCambiar.Location = new System.Drawing.Point(176, 319);
+            this.txtNombreCambiar.Name = "txtNombreCambiar";
+            this.txtNombreCambiar.Size = new System.Drawing.Size(199, 26);
+            this.txtNombreCambiar.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(405, 450);
+            this.ClientSize = new System.Drawing.Size(405, 537);
+            this.Controls.Add(this.txtNombreCambiar);
+            this.Controls.Add(this.lblNuevoNombre);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.listNombres);
             this.Controls.Add(this.txtNombres);
             this.Controls.Add(this.lblNombre);
@@ -104,6 +148,10 @@
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.TextBox txtNombres;
         private System.Windows.Forms.ListBox listNombres;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Label lblNuevoNombre;
+        private System.Windows.Forms.TextBox txtNombreCambiar;
     }
 }
 
