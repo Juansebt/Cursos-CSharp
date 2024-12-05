@@ -15,8 +15,23 @@ namespace Csharp2
         [STAThread]
         static void Main()
         {
+            //Listas - list<>
+
+            List<int> lista2 = new List<int>();
+
+            lista2.Add(1);
+            lista2.Add(2);
+            lista2.Add(3);
+
+            foreach (var dato in lista2)
+            {
+                MessageBox.Show(dato.ToString());
+            }
+
+
             //ArrayList - arreglo dinámico
 
+            /*
             ArrayList lista = new ArrayList();
 
             lista.Add(1);
@@ -28,6 +43,7 @@ namespace Csharp2
             {
                 MessageBox.Show(dato.ToString());
             }
+            *7
 
 
             // Matrices
