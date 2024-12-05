@@ -16,14 +16,22 @@ namespace Csharp2
         {
             //blucles
 
+            string var = "";
+
             for (int i = 0; i < 10; i++)
             {
+                var += i.ToString();
+
                 if (i == 5)
                 {
-                    break;
+                    //break;
+                    continue;
                 }
-                MessageBox.Show(i.ToString());
+
+                var += " - ";
             }
+
+            MessageBox.Show(var);
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
