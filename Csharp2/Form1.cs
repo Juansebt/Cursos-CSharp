@@ -33,12 +33,16 @@ namespace Csharp2
                 {
                     if (password == "admin")
                     {
-                        MessageBox.Show("¡Credenciales correcto! Puedes pasar.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("¡Credenciales correcta! Puedes pasar.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
                         MessageBox.Show("¡Contraseña incorrecta! Intenta de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                }
+                else if (user == "juan" && password == "123")
+                {
+                    MessageBox.Show("¡Credenciales correcta! Puedes pasar.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
