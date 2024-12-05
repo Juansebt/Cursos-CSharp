@@ -29,6 +29,20 @@ namespace Csharp2
 
             try
             {
+                switch (user)
+                {
+                    case "admin":
+                        MessageBox.Show("Escribiste admin, puedes pasar", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
+                    case "juan":
+                        MessageBox.Show("Escribiste juan, puedes ingresar", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
+                    default:
+                        MessageBox.Show("Esa opción no es valida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                }
+
+                /*
                 if (user.Equals("admin", StringComparison.OrdinalIgnoreCase)) //comparación insensible a mayúsculas y minúsculas
                 {
                     if (password == "admin")
@@ -48,6 +62,7 @@ namespace Csharp2
                 {
                     MessageBox.Show("¡Usuario incorrecto! Intenta de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                */
 
                 //operadores logicos
                 //if (user != "admin" || Convert.ToInt32(password) < 100) //diferente de admin o nérmo menor de 100
