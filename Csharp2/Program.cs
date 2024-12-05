@@ -14,8 +14,25 @@ namespace Csharp2
         [STAThread]
         static void Main()
         {
+            // Matrices
+
+            int[,] numeros = new int[3, 5];
+
+            numeros[0, 0] = 1;
+            numeros[0, 1] = 2;
+            numeros[0, 2] = 3;
+            numeros[0, 3] = 4;
+            numeros[0, 4] = 5;
+
+            for (int i = 0; i < 5; i++)
+            {
+                MessageBox.Show(numeros[0,i].ToString());
+            }
+
+
             // Vectores - Arreglos
 
+            /*
             int[] numeros = new int[5];
 
             numeros[0] = 1;
@@ -30,7 +47,7 @@ namespace Csharp2
             {
                 //MessageBox.Show(numeros[i].ToString());
             }
-
+            
             string[] posicion = new string[5];
 
             for (int i = 0; i < posicion.Length; i++) //llenar un arreglo
@@ -38,6 +55,7 @@ namespace Csharp2
                 posicion[i] = "mi posicion es: " + i.ToString();
                 MessageBox.Show(posicion[i].ToString());
             }
+            */
 
 
             //blucles
