@@ -29,9 +29,16 @@ namespace Csharp2
 
             try
             {
-                if (user.Equals("admin", StringComparison.OrdinalIgnoreCase) && password == "admin") //comparación insensible a mayúsculas y minúsculas
+                if (user.Equals("admin", StringComparison.OrdinalIgnoreCase)) //comparación insensible a mayúsculas y minúsculas
                 {
-                    MessageBox.Show("¡Usuario correcto! Puedes pasar.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (password == "admin")
+                    {
+                        MessageBox.Show("¡Credenciales correcto! Puedes pasar.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("¡Contraseña incorrecta! Intenta de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
