@@ -16,18 +16,40 @@ namespace Csharp2
         {
             // Matrices
 
-            int[,] numeros = new int[3, 5];
+            int[,] matriz = new int[5,5];
 
-            numeros[0, 0] = 1;
-            numeros[0, 1] = 2;
-            numeros[0, 2] = 3;
-            numeros[0, 3] = 4;
-            numeros[0, 4] = 5;
-
-            for (int i = 0; i < 5; i++)
+            //rellenar la matriz
+            for (int filas = 0; filas < matriz.GetLength(0); filas++)
             {
-                MessageBox.Show(numeros[0,i].ToString());
+                for (int columnas = 0; columnas < matriz.GetLength(1); columnas++)
+                {
+                    matriz[filas,columnas] = 300 * (filas + 3) * (columnas + 4);
+                }
             }
+
+            //leer la matriz
+            for (int filas = 0; filas < matriz.GetLength(0); filas++)
+            {
+                for (int columnas = 0; columnas < matriz.GetLength(1); columnas++)
+                {
+                    MessageBox.Show("La posición es: " + filas + " - " + columnas + " = " + matriz[filas,columnas].ToString());
+                }
+            }
+
+            //int[,] numeros = new int[3, 5];
+
+            //numeros[0, 0] = 1;
+            //numeros[0, 1] = 2;
+            //numeros[0, 2] = 3;
+            //numeros[0, 3] = 4;
+            //numeros[0, 4] = 5;
+
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    MessageBox.Show(numeros[0,i].ToString());
+            //}
+
+
 
 
             // Vectores - Arreglos
