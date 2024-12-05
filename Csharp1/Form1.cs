@@ -24,20 +24,28 @@ namespace Csharp1
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            string textoDelTexBox = txtNombre.Text.Trim(); //traer lo que tiene el textBox
+            try
+            {
+                string textoDelTexBox = txtNombre.Text.Trim(); //traer lo que tiene el textBox
 
-            if (string.IsNullOrEmpty(textoDelTexBox))
-            {
-                // Si el campo está vacío, muestra un mensaje de advertencia
-                lblTexto.Text = "Por favor ingrese su nombre.";
-                lblTexto.ForeColor = Color.Red;
+                if (string.IsNullOrEmpty(textoDelTexBox))
+                {
+                    // Si el campo está vacío, muestra un mensaje de advertencia
+                    lblTexto.Text = "Por favor ingrese su nombre.";
+                    lblTexto.ForeColor = Color.Red;
+                }
+                else
+                {
+                    // Si hay texto, muestra el mensaje con el nombre
+                    lblTexto.Text = "Bienvenido a mi primer formulario " + textoDelTexBox;
+                    lblTexto.ForeColor = Color.Green;
+                }
             }
-            else
+            catch (Exception ex) 
             {
-                // Si hay texto, muestra el mensaje con el nombre
-                lblTexto.Text = "Bienvenido a mi primer formulario " + textoDelTexBox;
-                lblTexto.ForeColor = Color.Green;
+                MessageBox.Show("Error: " + ex);
             }
+
 
             /*
             try

@@ -75,7 +75,7 @@ namespace Csharp1
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(296, 26);
             this.txtNombre.TabIndex = 3;
-            txtNombre.KeyPress += new KeyPressEventHandler(txtNombre_KeyPress);
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // lblTitulo
             // 
@@ -89,7 +89,7 @@ namespace Csharp1
             // lblTexto
             // 
             this.lblTexto.AutoSize = true;
-            this.lblTexto.Location = new System.Drawing.Point(66, 221);
+            this.lblTexto.Location = new System.Drawing.Point(17, 175);
             this.lblTexto.Name = "lblTexto";
             this.lblTexto.Size = new System.Drawing.Size(29, 20);
             this.lblTexto.TabIndex = 5;
