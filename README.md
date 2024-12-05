@@ -11,6 +11,19 @@ Este proyecto es un programa simple en C# que muestra cómo usar diferentes tipo
 - **Funciones**: Ejemplos de funciones con y sin parámetros, y con retorno de valores.
 - **Clases**: Ejemplo básico de definición y uso de una clase con propiedades y un constructor.
 
+## Temas del curso intensivo de C#
+
+- **Sintaxis básica de C#**: Introducción a la estructura básica del lenguaje, tipos de datos y operadores.
+- **Estructuras de control**: Uso de condicionales (`if`, `else`, `switch`) y bucles (`for`, `foreach`, `while`).
+- **Tipos de datos**: Diferencias entre tipos por valor y tipos por referencia, incluyendo `structs` y `enums`.
+- **Colecciones**: Trabajo con arrays, listas (`List`), diccionarios (`Dictionary`), y conjuntos (`HashSet`).
+- **Métodos y funciones**: Definición y uso de métodos, sobrecarga de métodos, parámetros opcionales y retorno de valores.
+- **Clases y Objetos**: Definición de clases, propiedades, métodos, constructores y sobrecarga de constructores.
+- **Interfaces y clases abstractas**: Diferencias y uso de interfaces y clases abstractas en la arquitectura de software.
+- **Manejo de excepciones**: Uso de `try`, `catch`, `finally`, y creación de excepciones personalizadas.
+- **Delegados y eventos**: Implementación de delegados, eventos y su aplicación en el manejo de eventos de formularios.
+- **Aplicaciones Windows Forms**: Introducción al desarrollo de interfaces gráficas usando Windows Forms y manejo de eventos en formularios.
+
 ## Requisitos
 
 - [.NET SDK](https://dotnet.microsoft.com/download) versión 6.0 o superior.
