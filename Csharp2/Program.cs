@@ -17,6 +17,7 @@ namespace Csharp2
         {
             //Listas - list<>
 
+            /*
             List<int> lista2 = new List<int>();
 
             lista2.Add(1);
@@ -27,6 +28,7 @@ namespace Csharp2
             {
                 MessageBox.Show(dato.ToString());
             }
+            */
 
 
             //ArrayList - arreglo dinámico
@@ -168,9 +170,9 @@ namespace Csharp2
             MessageBox.Show(var);
             */
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
         }
     }
 }
