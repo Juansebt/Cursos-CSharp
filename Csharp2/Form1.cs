@@ -21,5 +21,28 @@ namespace Csharp2
         {
             Application.Exit();
         }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string user = txtUser.Text;
+                string password = txtPassword.Text;
+
+                if (user.Equals("admin", StringComparison.OrdinalIgnoreCase) && password == "admin") //comparación insensible a mayúsculas y minúsculas
+                {
+                    MessageBox.Show("¡Usuario correcto! Puedes pasar.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("¡Usuario incorrecto! Intenta de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex);
+            }
+        }
     }
 }
