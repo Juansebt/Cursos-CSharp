@@ -15,6 +15,7 @@ namespace POO_practica1
     {
         Telefono Movistar = new Telefono(); //se instancia un objeto de la clase Telefono
         //Productos.Telefono Movistar = new Productos.Telefono();
+        Telefono Claro = new Telefono("Samsung", "Negro", "S22");
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +24,9 @@ namespace POO_practica1
         private void btnLlamar_Click(object sender, EventArgs e)
         {
             Movistar.Llamar();
+
+            Claro.Llamar();
+
             //Movistar.Marca = "Samsung";
             //Movistar.Llamar();
         }
