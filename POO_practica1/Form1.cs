@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Productos; //referencia al namespace de productos
 
 namespace POO_practica1
 {
     public partial class Form1 : Form
     {
         Telefono Movistar = new Telefono(); //se instancia un objeto de la clase Telefono
+        //Productos.Telefono Movistar = new Productos.Telefono();
         public Form1()
         {
             InitializeComponent();
