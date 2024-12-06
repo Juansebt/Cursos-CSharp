@@ -103,5 +103,48 @@ namespace Datos_connection
                 MessageBox.Show("Error: " + ex);
             }
         }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //valida que la ventana se abrio correctamente
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    if (File.Exists(saveFileDialog1.FileName)) //validar si exite el archivo
+                    {
+                        string txt = saveFileDialog1.FileName;
+
+                        StreamWriter TextoGuardar = File.CreateText(txt); //crear el texto
+
+                        TextoGuardar.Write(rtxtContenido.Text); //escribir en el archivo
+
+                        TextoGuardar.Flush(); //liberar memoria
+
+                        TextoGuardar?.Close();
+
+                        txtRuta.Text = txt;
+                    }
+                    else
+                    {
+                        string txt = saveFileDialog1.FileName;
+
+                        StreamWriter TextoGuardar = File.CreateText(txt);
+
+                        TextoGuardar.Write(rtxtContenido.Text);
+
+                        TextoGuardar.Flush();
+
+                        TextoGuardar?.Close();
+
+                        txtRuta.Text = txt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex);
+            }
+        }
     }
 }
