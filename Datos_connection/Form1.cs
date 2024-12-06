@@ -60,5 +60,16 @@ namespace Datos_connection
             }
             */
         }
+
+        private void btnLeer_Click(object sender, EventArgs e)
+        {
+            TextReader Leer = new StreamReader("Test.txt"); //creamos un objeto y especificamos la ruta del archivo
+
+            //MessageBox.Show(Leer.ReadLine()); //leer el contenido del archivo - una sola linea
+
+            MessageBox.Show(Leer.ReadToEnd()); //lee todos los caracteres
+
+            Leer.Close();
+        }
     }
 }

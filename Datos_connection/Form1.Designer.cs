@@ -53,6 +53,7 @@
             this.btnLeer.TabIndex = 1;
             this.btnLeer.Text = "LEER";
             this.btnLeer.UseVisualStyleBackColor = false;
+            this.btnLeer.Click += new System.EventHandler(this.btnLeer_Click);
             // 
             // lblTitulo
             // 
