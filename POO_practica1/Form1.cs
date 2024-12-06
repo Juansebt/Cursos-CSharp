@@ -13,9 +13,12 @@ namespace POO_practica1
 {
     public partial class Form1 : Form
     {
-        Telefono Movistar = new Telefono(); //se instancia un objeto de la clase Telefono
+        //Telefono Movistar = new Telefono(); //se instancia un objeto de la clase Telefono
         //Productos.Telefono Movistar = new Productos.Telefono();
         //Telefono Claro = new Telefono("Samsung", "Negro", "S22");
+
+        Persona persona = new Persona();
+
         public Form1()
         {
             InitializeComponent();
@@ -27,12 +30,16 @@ namespace POO_practica1
 
             //MessageBox.Show(Movistar.MandarMensaje("Eduardo", "Hola a todos!"));
 
-            MessageBox.Show(Operaciones.Suma(5, 10).ToString());
+            //MessageBox.Show(Operaciones.Suma(5, 10).ToString());
 
             //Claro.Llamar();
 
             //Movistar.Marca = "Samsung";
             //Movistar.Llamar();
+
+            persona.Pais = "Colombia";
+            persona.Nit = "123456789";
+            MessageBox.Show(persona.Nit);
         }
     }
 }
