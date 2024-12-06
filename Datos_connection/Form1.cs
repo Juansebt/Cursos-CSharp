@@ -26,6 +26,12 @@ namespace Datos_connection
 
             Escribe.Close(); //cerrar recursos - objeto
 
+            StreamWriter Agregar = File.AppendText("Test.txt"); //agregar una nueva linea en el archivo
+
+            Agregar.WriteLine("Yo soy Juanse..."); //contenido de la nueva linea
+
+            Agregar.Close();
+
             MessageBox.Show("Archvio creado con exito");
 
             /*
@@ -38,6 +44,20 @@ namespace Datos_connection
             }
 
             MessageBox.Show("Archivo creado y contenido escrito en: " + rutaArchivo);
+            */
+
+            /*
+            string archivo = "Test.txt";
+
+            using (StreamWriter Escribe = new StreamWriter(archivo))
+            {
+                Escribe.WriteLine("Hola mundo!");
+            }
+
+            using (StreamWriter Agregar = File.AppendText(archivo))
+            { 
+                Agregar.WriteLine("Yo soy Juanse...");
+            }
             */
         }
     }
