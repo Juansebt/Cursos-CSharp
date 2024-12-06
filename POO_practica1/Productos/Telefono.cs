@@ -10,14 +10,22 @@ namespace Productos
     {
         //Atributos o propieades de la clase
         //son atributos publicos, se pueden usar fuera de la clase
-        public string Marca;
-        public string Color;
-        public string Tipo; 
+        private string Marca;
+        private string Color;
+        private string Tipo;
+
+        //Metodo contructor
+        public Telefono()
+        {
+            Marca = "Iphone";
+            Color = "Blanco";
+            Tipo = "16 Pro Max";
+        }
 
         //Metodo publico que no recive ningún parámetro
         public void Llamar()
         {
-            System.Windows.Forms.MessageBox.Show("Hola a todos...");
+            System.Windows.Forms.MessageBox.Show("Hola, su marca de telefono es " + Marca + Tipo);
         }
 
         public void MandarMensaje()

@@ -23,6 +23,8 @@ namespace POO_practica1
         private void btnLlamar_Click(object sender, EventArgs e)
         {
             Movistar.Llamar();
+            //Movistar.Marca = "Samsung";
+            //Movistar.Llamar();
         }
     }
 }
