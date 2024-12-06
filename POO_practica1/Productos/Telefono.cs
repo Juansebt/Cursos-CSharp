@@ -41,9 +41,13 @@ namespace Productos
             System.Windows.Forms.MessageBox.Show("Hola, su marca de telefono es " + Marca + " " + Tipo + " de color " + Color);
         }
 
-        public void MandarMensaje()
+        public string MandarMensaje(string Name, string Message)
         {
+            string Nombre = Name;
+            string Mensaje = Message;
 
+            string Enviando = "El mensaje: " + Mensaje + ", enviado por: " + Nombre;
+            return Enviando;
         }
     }
 }
