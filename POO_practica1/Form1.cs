@@ -25,7 +25,9 @@ namespace POO_practica1
         {
             //Movistar.Llamar();
 
-            MessageBox.Show(Movistar.MandarMensaje("Eduardo", "Hola a todos!"));
+            //MessageBox.Show(Movistar.MandarMensaje("Eduardo", "Hola a todos!"));
+
+            MessageBox.Show(Operaciones.Suma(5, 10).ToString());
 
             //Claro.Llamar();
 
