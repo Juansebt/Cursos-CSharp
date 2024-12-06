@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -71,6 +72,59 @@ namespace DataBase_connection
             catch (Exception ex)
             {
                 MessageBox.Show("Error al desconectar: " + ex.Message);
+            }
+        }
+
+        private void btnConsulta_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Verificar si la conexión está abierta, si no, abrirla
+                if (conexion.State != ConnectionState.Open)
+                    conexion.Open();
+
+                // Si el campo de texto está vacío, consulta todos los registros
+                if (txtPais.Text == "")
+                {
+                    string query = "select * from personas"; //script de consulta
+
+                    MySqlCommand comando = new MySqlCommand(query, conexion); //ejecutar la consulta
+
+                    MySqlDataAdapter data = new MySqlDataAdapter(comando); //comunica la base de datos con el datatable
+
+                    DataTable tabla = new DataTable(); //crear un dataTable
+
+                    data.Fill(tabla); //llenar la tabla con los resultados
+
+                    dgvConsulta.DataSource = tabla; //asignar la tabla al DataGridView
+                }
+                else
+                {
+                    //string query = "select * from personas where pais = '" + txtPais.Text + "'";
+                    string query = "select * from personas where pais = @pais"; // Usar parámetros para evitar inyecciones SQL
+
+                    MySqlCommand comando = new MySqlCommand(query, conexion);
+
+                    comando.Parameters.AddWithValue("@pais", txtPais.Text); // Agregar el parámetro de manera segura
+
+                    MySqlDataAdapter data = new MySqlDataAdapter(comando);
+
+                    DataTable tabla = new DataTable();
+
+                    data.Fill(tabla);
+
+                    dgvConsulta.DataSource = tabla;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta: " + ex.Message + "\n" + ex.StackTrace);
+            }
+            finally
+            {
+                // Asegurarse de que la conexión se cierre siempre, aunque ocurra un error
+                if (conexion.State == ConnectionState.Open)
+                    conexion.Close();
             }
         }
     }
