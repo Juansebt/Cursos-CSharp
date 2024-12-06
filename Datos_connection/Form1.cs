@@ -71,5 +71,37 @@ namespace Datos_connection
 
             Leer.Close();
         }
+
+        private void btnAbrir_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                openFileDialog1.Title = "Buscar archvio de texto";
+
+                // Limitar a solo archivos .txt
+                openFileDialog1.Filter = "Archivos de texto (*.txt)|*.txt";
+
+                openFileDialog1.ShowDialog();
+
+                string Texto = openFileDialog1.FileName;
+
+                //verificar si el archivo existe
+                if (File.Exists(openFileDialog1.FileName))
+                {
+                    //leer el archivo
+                    TextReader Leer = new StreamReader(Texto);
+
+                    rtxtContenido.Text = Leer.ReadToEnd(); //mostrar en el richTextBox
+
+                    Leer.Close();
+                }
+
+                txtRuta.Text = Texto; //mostra la ruta en el TextBox
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex);
+            }
+        }
     }
 }
