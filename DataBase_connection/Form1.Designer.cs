@@ -34,6 +34,15 @@
             this.btnConsulta = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPais = new System.Windows.Forms.TextBox();
+            this.btnAgregar = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtNombrePersona = new System.Windows.Forms.TextBox();
+            this.txtEdadPersona = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtPaisPersona = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtNitPersona = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsulta)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,11 +105,95 @@
             this.txtPais.Size = new System.Drawing.Size(246, 26);
             this.txtPais.TabIndex = 6;
             // 
+            // btnAgregar
+            // 
+            this.btnAgregar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnAgregar.Location = new System.Drawing.Point(36, 457);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(303, 68);
+            this.btnAgregar.TabIndex = 7;
+            this.btnAgregar.Text = "AGREGAR";
+            this.btnAgregar.UseVisualStyleBackColor = false;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(401, 466);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(83, 20);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "NOMBRE:";
+            // 
+            // txtNombrePersona
+            // 
+            this.txtNombrePersona.Location = new System.Drawing.Point(401, 489);
+            this.txtNombrePersona.Name = "txtNombrePersona";
+            this.txtNombrePersona.Size = new System.Drawing.Size(172, 26);
+            this.txtNombrePersona.TabIndex = 9;
+            // 
+            // txtEdadPersona
+            // 
+            this.txtEdadPersona.Location = new System.Drawing.Point(591, 489);
+            this.txtEdadPersona.Name = "txtEdadPersona";
+            this.txtEdadPersona.Size = new System.Drawing.Size(172, 26);
+            this.txtEdadPersona.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(591, 466);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 20);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "EDAD:";
+            // 
+            // txtPaisPersona
+            // 
+            this.txtPaisPersona.Location = new System.Drawing.Point(782, 489);
+            this.txtPaisPersona.Name = "txtPaisPersona";
+            this.txtPaisPersona.Size = new System.Drawing.Size(172, 26);
+            this.txtPaisPersona.TabIndex = 13;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(782, 466);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(50, 20);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "PAIS:";
+            // 
+            // txtNitPersona
+            // 
+            this.txtNitPersona.Location = new System.Drawing.Point(976, 489);
+            this.txtNitPersona.Name = "txtNitPersona";
+            this.txtNitPersona.Size = new System.Drawing.Size(172, 26);
+            this.txtNitPersona.TabIndex = 15;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(976, 466);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 20);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "NIT:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1192, 450);
+            this.ClientSize = new System.Drawing.Size(1192, 557);
+            this.Controls.Add(this.txtNitPersona);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtPaisPersona);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtEdadPersona);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtNombrePersona);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.txtPais);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnConsulta);
@@ -123,6 +216,15 @@
         private System.Windows.Forms.Button btnConsulta;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPais;
+        private System.Windows.Forms.Button btnAgregar;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtNombrePersona;
+        private System.Windows.Forms.TextBox txtEdadPersona;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtPaisPersona;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtNitPersona;
+        private System.Windows.Forms.Label label5;
     }
 }
 
