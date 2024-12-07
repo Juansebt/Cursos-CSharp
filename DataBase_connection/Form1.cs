@@ -327,5 +327,118 @@ namespace DataBase_connection
                 }
             }
         }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            MySqlTransaction transaction = null; // Declarar la transacción dentro de la función
+
+            try
+            {
+                // Verificar si el campo de nombre está vacío antes de proceder
+                if (string.IsNullOrEmpty(txtNombre.Text))
+                {
+                    MessageBox.Show("Por favor, ingrese un nombre para eliminar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                validarCamposLlenos();
+
+                // Validar que el campo edad sea un número entero
+                if (!int.TryParse(txtEdadPersona.Text, out int edad))
+                {
+                    MessageBox.Show("La edad debe ser un número entero.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Consulta para obtener el ID de la persona según el nombre
+                string queryBuscar = "SELECT id FROM personas WHERE nombre = @nombre;";
+
+                // Verificar si la conexión está abierta, si no, abrirla
+                if (conexion.State != ConnectionState.Open)
+                {
+                    conexion.Open();
+                }
+
+                int idPersona = 0; // Almacenar el ID de la persona a actualizar
+
+                // Ejecutar la consulta para buscar a la persona por nombre
+                using (MySqlCommand comandoBuscar = new MySqlCommand(queryBuscar, conexion))
+                {
+                    comandoBuscar.Parameters.AddWithValue("@nombre", txtNombre.Text); // Asingnar el valor al parámetro
+
+                    // Ejecutar la consulta y usar un lector para obtener los resultados
+                    using (MySqlDataReader reader = comandoBuscar.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            idPersona = reader.GetInt32("id"); // Obtener el ID de la persona
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontró una persona con el nombre: " + txtNombre.Text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                }
+
+                // Confirmar la actualización mostrando los detalles de la persona
+                var confirmResult = MessageBox.Show("¿Está seguro de que desea actualizar el registro de: "+ txtNombre.Text + "?","Confirmar actualización", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmResult == DialogResult.No)
+                {
+                    return; // Si el usuario cancela la actualización, salir de la función
+                }
+
+                transaction = conexion.BeginTransaction(); // Iniciar la transacción
+
+                string query = "UPDATE personas SET nombre = @nombre, edad = @edad, pais = @pais, nit = @nit WHERE id = @id;";
+
+                int flag = 0; // Para verificar el resultado de la consulta
+
+                using (MySqlCommand comandoActualizar = new MySqlCommand(query, conexion, transaction))
+                {
+                    // Asignar los valores a los parámetros de manera segura
+                    comandoActualizar.Parameters.AddWithValue("@id", idPersona);
+                    comandoActualizar.Parameters.AddWithValue("@nombre", txtNombrePersona.Text);
+                    comandoActualizar.Parameters.AddWithValue("@edad", edad); // Usar el valor entero para la edad
+                    comandoActualizar.Parameters.AddWithValue("@pais", txtPaisPersona.Text);
+                    comandoActualizar.Parameters.AddWithValue("@nit", txtNitPersona.Text);
+
+                    // Ejecutar la consulta de actualización
+                    flag = comandoActualizar.ExecuteNonQuery();
+                }
+
+                // Verificar si se actualizó algún registro
+                if (flag == 1)
+                {
+                    transaction.Commit(); // Confirmar la transacción
+
+                    MessageBox.Show("El registro de la persona: " + txtNombre.Text + " se ha actualizado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo actualizar el registro.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                txtNombre.Text = "";
+
+                limpiarCampos();
+
+                consulta();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback(); // Si ocurre un error, revertir la transacción
+
+                MessageBox.Show("Error al actualizar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
+            }
+        }
     }
 }

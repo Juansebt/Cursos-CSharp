@@ -45,6 +45,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
+            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsulta)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,17 +98,17 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(393, 471);
+            this.label1.Location = new System.Drawing.Point(388, 492);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(160, 20);
+            this.label1.Size = new System.Drawing.Size(50, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "FILTRAR POR PAIS:";
+            this.label1.Text = "PAIS:";
             // 
             // txtPais
             // 
-            this.txtPais.Location = new System.Drawing.Point(559, 465);
+            this.txtPais.Location = new System.Drawing.Point(444, 486);
             this.txtPais.Name = "txtPais";
-            this.txtPais.Size = new System.Drawing.Size(604, 26);
+            this.txtPais.Size = new System.Drawing.Size(327, 26);
             this.txtPais.TabIndex = 6;
             // 
             // btnAgregar
@@ -186,12 +189,13 @@
             // btnActualizar
             // 
             this.btnActualizar.BackColor = System.Drawing.Color.White;
-            this.btnActualizar.Location = new System.Drawing.Point(397, 534);
+            this.btnActualizar.Location = new System.Drawing.Point(392, 534);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(379, 68);
             this.btnActualizar.TabIndex = 16;
             this.btnActualizar.Text = "ACTUALIZAR";
             this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
             // btnEliminar
             // 
@@ -204,11 +208,39 @@
             this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
+            // txtNombre
+            // 
+            this.txtNombre.Location = new System.Drawing.Point(895, 486);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(268, 26);
+            this.txtNombre.TabIndex = 19;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(806, 492);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(83, 20);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "NOMBRE:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(689, 444);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(200, 20);
+            this.label7.TabIndex = 20;
+            this.label7.Text = "FILTROS DE BUSQUEDA";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1198, 628);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtNombre);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.txtNitPersona);
@@ -253,6 +285,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }
 
