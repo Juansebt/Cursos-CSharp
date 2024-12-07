@@ -43,15 +43,17 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtNitPersona = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnActualizar = new System.Windows.Forms.Button();
+            this.btnEliminar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsulta)).BeginInit();
             this.SuspendLayout();
             // 
             // btnConectar
             // 
             this.btnConectar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnConectar.Location = new System.Drawing.Point(36, 76);
+            this.btnConectar.Location = new System.Drawing.Point(40, 534);
             this.btnConectar.Name = "btnConectar";
-            this.btnConectar.Size = new System.Drawing.Size(303, 68);
+            this.btnConectar.Size = new System.Drawing.Size(133, 68);
             this.btnConectar.TabIndex = 0;
             this.btnConectar.Text = "CONECTAR";
             this.btnConectar.UseVisualStyleBackColor = false;
@@ -61,9 +63,9 @@
             // 
             this.btnDesconectar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnDesconectar.ForeColor = System.Drawing.Color.White;
-            this.btnDesconectar.Location = new System.Drawing.Point(36, 166);
+            this.btnDesconectar.Location = new System.Drawing.Point(189, 534);
             this.btnDesconectar.Name = "btnDesconectar";
-            this.btnDesconectar.Size = new System.Drawing.Size(303, 68);
+            this.btnDesconectar.Size = new System.Drawing.Size(150, 68);
             this.btnDesconectar.TabIndex = 2;
             this.btnDesconectar.Text = "DESCONECTAR";
             this.btnDesconectar.UseVisualStyleBackColor = false;
@@ -81,34 +83,35 @@
             // 
             // btnConsulta
             // 
-            this.btnConsulta.Location = new System.Drawing.Point(36, 258);
+            this.btnConsulta.BackColor = System.Drawing.Color.White;
+            this.btnConsulta.Location = new System.Drawing.Point(40, 444);
             this.btnConsulta.Name = "btnConsulta";
-            this.btnConsulta.Size = new System.Drawing.Size(303, 68);
+            this.btnConsulta.Size = new System.Drawing.Size(299, 68);
             this.btnConsulta.TabIndex = 4;
-            this.btnConsulta.Text = "CONSULTA";
-            this.btnConsulta.UseVisualStyleBackColor = true;
+            this.btnConsulta.Text = "CONSULTAR";
+            this.btnConsulta.UseVisualStyleBackColor = false;
             this.btnConsulta.Click += new System.EventHandler(this.btnConsulta_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(36, 358);
+            this.label1.Location = new System.Drawing.Point(393, 471);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 20);
+            this.label1.Size = new System.Drawing.Size(160, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "PAIS:";
+            this.label1.Text = "FILTRAR POR PAIS:";
             // 
             // txtPais
             // 
-            this.txtPais.Location = new System.Drawing.Point(93, 352);
+            this.txtPais.Location = new System.Drawing.Point(559, 465);
             this.txtPais.Name = "txtPais";
-            this.txtPais.Size = new System.Drawing.Size(246, 26);
+            this.txtPais.Size = new System.Drawing.Size(604, 26);
             this.txtPais.TabIndex = 6;
             // 
             // btnAgregar
             // 
-            this.btnAgregar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnAgregar.Location = new System.Drawing.Point(36, 457);
+            this.btnAgregar.BackColor = System.Drawing.Color.White;
+            this.btnAgregar.Location = new System.Drawing.Point(36, 349);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(303, 68);
             this.btnAgregar.TabIndex = 7;
@@ -119,7 +122,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(401, 466);
+            this.label2.Location = new System.Drawing.Point(36, 33);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 20);
             this.label2.TabIndex = 8;
@@ -127,22 +130,22 @@
             // 
             // txtNombrePersona
             // 
-            this.txtNombrePersona.Location = new System.Drawing.Point(401, 489);
+            this.txtNombrePersona.Location = new System.Drawing.Point(36, 56);
             this.txtNombrePersona.Name = "txtNombrePersona";
-            this.txtNombrePersona.Size = new System.Drawing.Size(172, 26);
+            this.txtNombrePersona.Size = new System.Drawing.Size(303, 26);
             this.txtNombrePersona.TabIndex = 9;
             // 
             // txtEdadPersona
             // 
-            this.txtEdadPersona.Location = new System.Drawing.Point(591, 489);
+            this.txtEdadPersona.Location = new System.Drawing.Point(36, 125);
             this.txtEdadPersona.Name = "txtEdadPersona";
-            this.txtEdadPersona.Size = new System.Drawing.Size(172, 26);
+            this.txtEdadPersona.Size = new System.Drawing.Size(303, 26);
             this.txtEdadPersona.TabIndex = 11;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(591, 466);
+            this.label3.Location = new System.Drawing.Point(36, 102);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 20);
             this.label3.TabIndex = 10;
@@ -150,15 +153,15 @@
             // 
             // txtPaisPersona
             // 
-            this.txtPaisPersona.Location = new System.Drawing.Point(782, 489);
+            this.txtPaisPersona.Location = new System.Drawing.Point(36, 203);
             this.txtPaisPersona.Name = "txtPaisPersona";
-            this.txtPaisPersona.Size = new System.Drawing.Size(172, 26);
+            this.txtPaisPersona.Size = new System.Drawing.Size(303, 26);
             this.txtPaisPersona.TabIndex = 13;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(782, 466);
+            this.label4.Location = new System.Drawing.Point(36, 180);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(50, 20);
             this.label4.TabIndex = 12;
@@ -166,25 +169,48 @@
             // 
             // txtNitPersona
             // 
-            this.txtNitPersona.Location = new System.Drawing.Point(976, 489);
+            this.txtNitPersona.Location = new System.Drawing.Point(36, 279);
             this.txtNitPersona.Name = "txtNitPersona";
-            this.txtNitPersona.Size = new System.Drawing.Size(172, 26);
+            this.txtNitPersona.Size = new System.Drawing.Size(303, 26);
             this.txtNitPersona.TabIndex = 15;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(976, 466);
+            this.label5.Location = new System.Drawing.Point(36, 256);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 20);
             this.label5.TabIndex = 14;
             this.label5.Text = "NIT:";
             // 
+            // btnActualizar
+            // 
+            this.btnActualizar.BackColor = System.Drawing.Color.White;
+            this.btnActualizar.Location = new System.Drawing.Point(397, 534);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(379, 68);
+            this.btnActualizar.TabIndex = 16;
+            this.btnActualizar.Text = "ACTUALIZAR";
+            this.btnActualizar.UseVisualStyleBackColor = false;
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.BackColor = System.Drawing.Color.White;
+            this.btnEliminar.Location = new System.Drawing.Point(810, 534);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(353, 68);
+            this.btnEliminar.TabIndex = 17;
+            this.btnEliminar.Text = "ELIMINAR";
+            this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1192, 557);
+            this.ClientSize = new System.Drawing.Size(1198, 628);
+            this.Controls.Add(this.btnEliminar);
+            this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.txtNitPersona);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtPaisPersona);
@@ -225,6 +251,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtNitPersona;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.Button btnEliminar;
     }
 }
 

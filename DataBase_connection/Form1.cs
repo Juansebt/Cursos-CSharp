@@ -56,7 +56,7 @@ namespace DataBase_connection
             }
             catch (Exception ex)
             {
-                    MessageBox.Show("Error al conectarse a la base de datos: " + ex.Message);
+                    MessageBox.Show("Error al conectarse a la base de datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -70,7 +70,7 @@ namespace DataBase_connection
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al desconectar: " + ex.Message);
+                MessageBox.Show("Error al desconectar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -93,7 +93,7 @@ namespace DataBase_connection
                 string.IsNullOrWhiteSpace(txtPaisPersona.Text) ||
                 string.IsNullOrWhiteSpace(txtNitPersona.Text))
             {
-                MessageBox.Show("Todos los campos deben estar llenos.");
+                MessageBox.Show("Todos los campos deben estar llenos.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -179,7 +179,7 @@ namespace DataBase_connection
                 // Validar que el campo edad sea un número entero
                 if (!int.TryParse(txtEdadPersona.Text, out int edad))
                 {
-                    MessageBox.Show("La edad debe ser un número entero.");
+                    MessageBox.Show("La edad debe ser un número entero.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -209,7 +209,7 @@ namespace DataBase_connection
 
                 transaction.Commit(); // Si no ocurre ningún error, confirmar la transacción
 
-                MessageBox.Show("La persona: " + txtNombrePersona.Text + " se ha agregado correctamente!");
+                MessageBox.Show("La persona: " + txtNombrePersona.Text + " se ha agregado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 limpiarCampos(); // Limpiar las cajas de texto
 
@@ -219,11 +219,75 @@ namespace DataBase_connection
             {
                 transaction?.Rollback(); // Si ocurre un error, revertir la transacción
 
-                MessageBox.Show("Error al insertar la persona: " + ex.Message);
+                MessageBox.Show("Error al insertar la persona: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 // Asegurarse de que la conexión se cierre después de ejecutar la consulta
+                if (conexion.State == ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            MySqlTransaction transaction = null;
+
+            try
+            {
+                // Verificar si el campo de nombre está vacío antes de proceder
+                if (string.IsNullOrEmpty(txtNombrePersona.Text))
+                {
+                    MessageBox.Show("Por favor, ingrese un nombre para eliminar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string query = "DELETE FROM personas WHERE nombre = @nombre;"; // Script para eliminar
+
+
+                if (conexion.State != ConnectionState.Open)
+                {
+                    conexion.Open();
+                }
+
+                transaction = conexion.BeginTransaction(); // Iniciar la transacción
+
+                int flag = 0; // Para verificar el resultado de la consulta
+
+                using (MySqlCommand comando = new MySqlCommand(query, conexion, transaction)) // Se añade la transacción para asegurarse de que la consulta se ejecute dentro de la transacción iniciada
+                {
+                    // Asignar los valores a los parámetros de manera segura
+                    comando.Parameters.AddWithValue("@nombre", txtNombrePersona.Text);
+
+                    flag = comando.ExecuteNonQuery(); // // Si es 1, la eliminación fue exitosa, si es 0, no se encontró el registro
+                }
+
+                transaction.Commit(); // Confirmar la transacción
+
+                // Verificar si se eliminó algún registro
+                if (flag == 1)
+                {
+                    MessageBox.Show("El registro de la persona: " + txtNombrePersona.Text + " se ha eliminado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrio algo, no se encontro el registro!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                txtNombrePersona.Text = "";
+
+                consulta();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback(); // Si ocurre un error, revertir la transacción
+
+                MessageBox.Show("Error al eliminar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
                 if (conexion.State == ConnectionState.Open)
                 {
                     conexion.Close();
