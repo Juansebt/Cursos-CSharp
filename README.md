@@ -39,9 +39,9 @@ Este proyecto es un programa simple en C# que muestra cómo usar diferentes tipo
   - **Escribir en archivos**: Uso de `StreamWriter`, `File.WriteAllText()` y `File.AppendText()` para crear y modificar archivos de texto.
   - **Abrir y guardar archivos**: Uso de `OpenFileDialog` y `SaveFileDialog` para seleccionar y guardar archivos, asegurando que se manejen correctamente las rutas y extensiones de archivo.
 - **Conexión a bases de datos**: El proyecto incluye una cadena de conexión de ejemplo y métodos para abrir y cerrar conexiones a una base de datos MySQL. También cuenta con sus respectivos ejemplos de Insert, Delete, Update y consultas SQL.
-  -**MySQL**: Para conectarse a una base de datos MySQL, se utiliza la librería `MySql.Data.MySqlClient`. 
-  -**PostgreSQL**: Para conectarse a una base de datos PostgreSQL, se utiliza la librería `Npgsql`. 
-  -**SQL Server**: Para conectarse a una base de datos SQL Server, se utiliza la librería `System.Data.SqlClient`. 
+  - **MySQL**: Para conectarse a una base de datos MySQL, se utiliza la librería `MySql.Data.MySqlClient`. 
+  - **PostgreSQL**: Para conectarse a una base de datos PostgreSQL, se utiliza la librería `Npgsql`. 
+  - **SQL Server**: Para conectarse a una base de datos SQL Server, se utiliza la librería `System.Data.SqlClient`. 
 
 ## Requisitos
 
