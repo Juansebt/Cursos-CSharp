@@ -37,7 +37,7 @@ namespace DataBase_connection
         NpgsqlConnection conexion = new NpgsqlConnection(conexion_string); // Objeto de conexión para PostgreSQL
         */
 
-        //usando el gestor de base de datos de laragon
+        //usando el gestor de base de datos de laragon - MySQL
         static string conexion_string = "server=localhost;database=prueba;user=root;password=;";
 
         MySqlConnection conexion = new MySqlConnection(conexion_string);
@@ -47,6 +47,9 @@ namespace DataBase_connection
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Evento que maneja el botón para conectar a la base de datos.
+        /// </summary>
         private void btnConectar_Click(object sender, EventArgs e)
         {
             try
@@ -60,6 +63,9 @@ namespace DataBase_connection
             }
         }
 
+        /// <summary>
+        /// Evento que maneja el botón para desconectar la base de datos.
+        /// </summary>
         private void btnDesconectar_Click(object sender, EventArgs e)
         {
             try
@@ -74,17 +80,23 @@ namespace DataBase_connection
             }
         }
 
+        /// <summary>
+        /// Limpia los campos de entrada de texto en el formulario.
+        /// </summary>
         public void limpiarCampos()
         {
-            txtNombrePersona.Text = "";
+            txtNombrePersona.Clear();
 
-            txtEdadPersona.Text = "";
+            txtEdadPersona.Clear();
 
-            txtPaisPersona.Text = "";
+            txtPaisPersona.Clear();
 
-            txtNitPersona.Text = "";
+            txtNitPersona.Clear();
         }
 
+        /// <summary>
+        /// Valida que todos los campos del formulario estén llenos.
+        /// </summary>
         public void validarCamposLlenos()
         {
             // Validar que todos los campos estén llenos antes de ejecutar la consulta
@@ -99,6 +111,9 @@ namespace DataBase_connection
 
         }
 
+        /// <summary>
+        /// Ejecuta una consulta SQL para obtener todos los registros de la tabla 'personas' y los muestra en el DataGridView.
+        /// </summary>
         public void consulta()
         {
             try
@@ -123,6 +138,68 @@ namespace DataBase_connection
             }
         }
 
+        /// <summary>
+        /// Ejecuta una consulta para obtener los registros de la tabla 'personas' filtrados por país.
+        /// </summary>
+        public void consultarPorPais()
+        {
+            try
+            {
+                //string query = "select * from personas where pais = '" + txtPais.Text + "'";
+                string query = "SELECT * FROM personas WHERE pais = @pais"; // Usar parámetros para evitar inyecciones SQL
+
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+
+                comando.Parameters.AddWithValue("@pais", txtPais.Text); // Agregar el valor del parámetro '@pais' de manera segura usando el texto de 'txtPais'
+
+                MySqlDataAdapter data = new MySqlDataAdapter(comando); // Adaptador de datos que llenará el DataTable con los resultados filtrados
+
+                DataTable tabla = new DataTable();
+
+                data.Fill(tabla);
+
+                dgvConsulta.DataSource = tabla;
+
+                txtPais.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Ejecuta una consulta para obtener los registros de la tabla 'personas' filtrados por nombre.
+        /// </summary>
+        public void consultarPorNombre()
+        {
+            try
+            {
+                string query = "SELECT * FROM personas WHERE nombre = @nombre";
+
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+
+                comando.Parameters.AddWithValue("@nombre", txtNombre.Text);
+
+                MySqlDataAdapter data = new MySqlDataAdapter(comando);
+
+                DataTable tabla = new DataTable();
+
+                data.Fill(tabla);
+
+                dgvConsulta.DataSource = tabla;
+
+                txtNombre.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Maneja el evento para consultar registros según los filtros aplicados (nombre y/o país).
+        /// </summary>
         private void btnConsulta_Click(object sender, EventArgs e)
         {
             try
@@ -132,28 +209,17 @@ namespace DataBase_connection
                     conexion.Open(); // Abrir la conexión
 
                 // Si el campo de texto está vacío, consulta todos los registros
-                if (txtPais.Text == "")
+                if (string.IsNullOrEmpty(txtPais.Text) && string.IsNullOrEmpty(txtNombre.Text))
                 {
-                    consulta();
+                    consulta(); // Consulta sin filtros
                 }
-                else
+                else if (!string.IsNullOrEmpty(txtPais.Text))
                 {
-                    //string query = "select * from personas where pais = '" + txtPais.Text + "'";
-                    string query = "SELECT * FROM personas WHERE pais = @pais"; // Usar parámetros para evitar inyecciones SQL
-
-                    MySqlCommand comando = new MySqlCommand(query, conexion);
-
-                    comando.Parameters.AddWithValue("@pais", txtPais.Text); // Agregar el valor del parámetro '@pais' de manera segura usando el texto de 'txtPais'
-
-                    MySqlDataAdapter data = new MySqlDataAdapter(comando); // Adaptador de datos que llenará el DataTable con los resultados filtrados
-
-                    DataTable tabla = new DataTable();
-
-                    data.Fill(tabla);
-
-                    dgvConsulta.DataSource = tabla;
-
-                    txtPais.Text = "";
+                    consultarPorPais(); // Consulta solo por país
+                }
+                else if (!string.IsNullOrEmpty(txtNombre.Text))
+                {
+                    consultarPorNombre(); // Consulta solo por nombre
                 }
             }
             catch (Exception ex)
@@ -168,6 +234,9 @@ namespace DataBase_connection
             }
         }
 
+        /// <summary>
+        /// Evento para agregar un nuevo registro a la base de datos.
+        /// </summary>
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             MySqlTransaction transaction = null; // Declarar la transacción dentro de la función
@@ -231,6 +300,9 @@ namespace DataBase_connection
             }
         }
 
+        /// <summary>
+        /// Evento para manejar la eliminación de un registro de la base de datos según el nombre.
+        /// </summary>
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             MySqlTransaction transaction = null;
@@ -309,7 +381,7 @@ namespace DataBase_connection
                     MessageBox.Show("Ocurrio algo, no se encontro el registro!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                txtNombrePersona.Text = "";
+                txtNombrePersona.Clear();
 
                 consulta(); // ACtualizar los datos en la interfaz
             }
@@ -328,6 +400,9 @@ namespace DataBase_connection
             }
         }
 
+        /// <summary>
+        /// Evento para actualizar un registro en la base de datos según el nombre.
+        /// </summary>
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             MySqlTransaction transaction = null; // Declarar la transacción dentro de la función
@@ -420,7 +495,7 @@ namespace DataBase_connection
                     MessageBox.Show("No se pudo actualizar el registro.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                txtNombre.Text = "";
+                txtNombre.Clear();
 
                 limpiarCampos();
 
