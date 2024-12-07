@@ -244,31 +244,64 @@ namespace DataBase_connection
                     return;
                 }
 
-                string query = "DELETE FROM personas WHERE nombre = @nombre;"; // Script para eliminar
+                // Consulta para obtener el ID de la persona según el nombre
+                string queryBuscar = "SELECT * FROM personas WHERE nombre = @nombre;";
 
-
+                // Verificar si la conexión está cerrada, si es así, abrirla
                 if (conexion.State != ConnectionState.Open)
                 {
                     conexion.Open();
                 }
 
+                int idPersona = 0; // Almacenará el ID de la persona a eliminar
+
+                // Ejecutar la consulta para buscar a la persona por nombre
+                using (MySqlCommand comandoBuscar =  new MySqlCommand(queryBuscar, conexion))
+                {
+                    comandoBuscar.Parameters.AddWithValue("@nombre", txtNombrePersona.Text); // Asingnar el valor al parámetro
+
+                    // Ejecutar la consulta y usar un lector para obtener los resultados
+                    using (MySqlDataReader reader = comandoBuscar.ExecuteReader())
+                    {
+                        if (reader.Read()) // Verificar si se encontró un resultado
+                        {
+                            idPersona = reader.GetInt32("id"); // Obtener el ID de la persona desde el resultado de la consulta
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontró una persona con el nombre: " + txtNombrePersona.Text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                }
+
+                // Confirmar la eliminación mostrando los detalles de la persona
+                var confirmResult = MessageBox.Show("¿Está seguro de que desea eliminar el registro de: " + txtNombrePersona.Text + "?","Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmResult == DialogResult.No)
+                {
+                    return; // Si el usuario cancela la eliminación, salir de la función
+                }
+
                 transaction = conexion.BeginTransaction(); // Iniciar la transacción
+
+                string query = "DELETE FROM personas WHERE id = @id;"; // Script para eliminar
 
                 int flag = 0; // Para verificar el resultado de la consulta
 
                 using (MySqlCommand comando = new MySqlCommand(query, conexion, transaction)) // Se añade la transacción para asegurarse de que la consulta se ejecute dentro de la transacción iniciada
                 {
                     // Asignar los valores a los parámetros de manera segura
-                    comando.Parameters.AddWithValue("@nombre", txtNombrePersona.Text);
+                    comando.Parameters.AddWithValue("@id", idPersona);
 
                     flag = comando.ExecuteNonQuery(); // // Si es 1, la eliminación fue exitosa, si es 0, no se encontró el registro
                 }
 
-                transaction.Commit(); // Confirmar la transacción
-
                 // Verificar si se eliminó algún registro
                 if (flag == 1)
                 {
+                    transaction.Commit(); // Confirmar la transacción
+
                     MessageBox.Show("El registro de la persona: " + txtNombrePersona.Text + " se ha eliminado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -278,7 +311,7 @@ namespace DataBase_connection
 
                 txtNombrePersona.Text = "";
 
-                consulta();
+                consulta(); // ACtualizar los datos en la interfaz
             }
             catch (Exception ex)
             {
