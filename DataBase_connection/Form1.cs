@@ -19,28 +19,26 @@ namespace DataBase_connection
         /*
          * Conexión con SQL Server
         static string conexion_string_sqlserver = "server = localhost; database = pokemon88 ; integrated security = true"; // Cadena de conexión
-
         SqlConnection conexion = new SqlConnection(conexion_string_sqlserver); // Objeto de conexión SQL Server
         */
 
         /*
          * Conexión con MySQL
         static string conexion_string_mysql = "server=localhost;database=pokemon88;user=root;password=;"; // Cadena de conexión para MySQL
-        
         MySqlConnection conexion = new MySqlConnection(conexion_string_mysql); // Objeto de conexión de MySQL
         */
 
         /*
          * Conexión con PostgreSQL
         static string conexion_string = "Host=localhost;Port=5432;Username=postgres;Password=admin;Database=inventario;"; // Cadena de conexión para PostgreSQL
-
         NpgsqlConnection conexion = new NpgsqlConnection(conexion_string); // Objeto de conexión para PostgreSQL
         */
 
         //usando el gestor de base de datos de laragon - MySQL
         static string conexion_string = "server=localhost;database=prueba;user=root;password=;";
-
         MySqlConnection conexion = new MySqlConnection(conexion_string);
+
+        private ToolTip toolTip = new ToolTip(); // Instancia global de ToolTip en la clase
 
         public Form1()
         {
@@ -81,23 +79,30 @@ namespace DataBase_connection
         }
 
         /// <summary>
+        /// Función para mostrar ToolTip en el campo vacío
+        /// </summary>
+        private void mostrarToolTip(Control control, string mensaje)
+        {
+            toolTip.ToolTipTitle = "Campo requerido";
+            toolTip.Show(mensaje, control, 0, -20, 3000); // Mostrar el tooltip durante 3 segundos
+            control.Focus(); // Enfocar el control vacío
+        }
+
+        /// <summary>
         /// Limpia los campos de entrada de texto en el formulario.
         /// </summary>
         public void limpiarCampos()
         {
             txtNombrePersona.Clear();
-
             txtEdadPersona.Clear();
-
             txtPaisPersona.Clear();
-
             txtNitPersona.Clear();
         }
 
         /// <summary>
         /// Valida que todos los campos del formulario estén llenos.
         /// </summary>
-        public void validarCamposLlenos()
+        public bool validarCamposLlenos()
         {
             // Validar que todos los campos estén llenos antes de ejecutar la consulta
             if (string.IsNullOrWhiteSpace(txtNombrePersona.Text) ||
@@ -105,10 +110,31 @@ namespace DataBase_connection
                 string.IsNullOrWhiteSpace(txtPaisPersona.Text) ||
                 string.IsNullOrWhiteSpace(txtNitPersona.Text))
             {
-                MessageBox.Show("Todos los campos deben estar llenos.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show("Todos los campos del formulario deben estar llenos.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+
+        }
+
+        /// <summary>
+        /// Función para validad la edad
+        /// </summary>
+        private bool validarEdad()
+        {
+            if (string.IsNullOrWhiteSpace(txtEdadPersona.Text))
+            {
+                return true; // Si no hay edad ingresada, no validamos
             }
 
+            if (!int.TryParse(txtEdadPersona.Text, out _))
+            {
+                MessageBox.Show("La edad debe ser un número entero.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEdadPersona.Focus();
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -126,9 +152,7 @@ namespace DataBase_connection
                 using (MySqlDataAdapter data = new MySqlDataAdapter(comando)) // Crear un adaptador de datos que permitirá rellenar un DataTable con los resultados
                 {
                     DataTable tabla = new DataTable(); // Crear un DataTable que contendrá los resultados de la consulta
-
                     data.Fill(tabla); // Llenar el DataTable con los resultados de la consulta
-
                     dgvConsulta.DataSource = tabla; // Asignar el DataTable al DataGridView para mostrar los resultados en la interfaz
                 }
             }
@@ -148,17 +172,17 @@ namespace DataBase_connection
                 //string query = "select * from personas where pais = '" + txtPais.Text + "'";
                 string query = "SELECT * FROM personas WHERE pais = @pais"; // Usar parámetros para evitar inyecciones SQL
 
-                MySqlCommand comando = new MySqlCommand(query, conexion);
+                using (MySqlCommand comando = new MySqlCommand(query, conexion))
+                {
+                    comando.Parameters.AddWithValue("@pais", txtPais.Text); // Agregar el valor del parámetro '@pais' de manera segura usando el texto de 'txtPais'
 
-                comando.Parameters.AddWithValue("@pais", txtPais.Text); // Agregar el valor del parámetro '@pais' de manera segura usando el texto de 'txtPais'
-
-                MySqlDataAdapter data = new MySqlDataAdapter(comando); // Adaptador de datos que llenará el DataTable con los resultados filtrados
-
-                DataTable tabla = new DataTable();
-
-                data.Fill(tabla);
-
-                dgvConsulta.DataSource = tabla;
+                    using (MySqlDataAdapter data = new MySqlDataAdapter(comando)) // Adaptador de datos que llenará el DataTable con los resultados filtrados
+                    {
+                        DataTable tabla = new DataTable();
+                        data.Fill(tabla);
+                        dgvConsulta.DataSource = tabla;
+                    }
+                }
 
                 txtPais.Clear();
             }
@@ -177,17 +201,17 @@ namespace DataBase_connection
             {
                 string query = "SELECT * FROM personas WHERE nombre = @nombre";
 
-                MySqlCommand comando = new MySqlCommand(query, conexion);
+                using (MySqlCommand comando = new MySqlCommand(query, conexion))
+                {
+                    comando.Parameters.AddWithValue("@nombre", txtNombre.Text);
 
-                comando.Parameters.AddWithValue("@nombre", txtNombre.Text);
-
-                MySqlDataAdapter data = new MySqlDataAdapter(comando);
-
-                DataTable tabla = new DataTable();
-
-                data.Fill(tabla);
-
-                dgvConsulta.DataSource = tabla;
+                    using (MySqlDataAdapter data = new MySqlDataAdapter(comando))
+                    {
+                        DataTable tabla = new DataTable();
+                        data.Fill(tabla);
+                        dgvConsulta.DataSource = tabla;
+                    }
+                }
 
                 txtNombre.Clear();
             }
@@ -243,14 +267,11 @@ namespace DataBase_connection
 
             try
             {
-                validarCamposLlenos();
+                // Validar que todos los campos estén llenos
+                if (!validarCamposLlenos()) return;
 
-                // Validar que el campo edad sea un número entero
-                if (!int.TryParse(txtEdadPersona.Text, out int edad))
-                {
-                    MessageBox.Show("La edad debe ser un número entero.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                // Validar que la edad sea un número entero
+                if (!validarEdad()) return;
 
                 //string query = "INSERT INTO personas (nombre, edad, pais, nit) VALUES ('"+txtNombrePersona.Text+"', '"+txtEdadPersona.Text+"', '"+txtPaisPersona.Text+"', '"+txtNitPersona.Text+"');";
 
@@ -269,7 +290,7 @@ namespace DataBase_connection
                 {
                     // Asignar los valores a los parámetros de manera segura
                     comando.Parameters.AddWithValue("@nombre", txtNombrePersona.Text);
-                    comando.Parameters.AddWithValue("@edad", edad); // Usar el valor entero para la edad
+                    comando.Parameters.AddWithValue("@edad", int.Parse(txtEdadPersona.Text));
                     comando.Parameters.AddWithValue("@pais", txtPaisPersona.Text);
                     comando.Parameters.AddWithValue("@nit", txtNitPersona.Text);
 
@@ -277,17 +298,13 @@ namespace DataBase_connection
                 }
 
                 transaction.Commit(); // Si no ocurre ningún error, confirmar la transacción
-
                 MessageBox.Show("La persona: " + txtNombrePersona.Text + " se ha agregado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 limpiarCampos(); // Limpiar las cajas de texto
-
                 consulta(); // Llamar al método de consulta para actualizar la vista
             }
             catch (Exception ex)
             {
                 transaction?.Rollback(); // Si ocurre un error, revertir la transacción
-
                 MessageBox.Show("Error al insertar la persona: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -310,9 +327,10 @@ namespace DataBase_connection
             try
             {
                 // Verificar si el campo de nombre está vacío antes de proceder
-                if (string.IsNullOrEmpty(txtNombrePersona.Text))
+                if (string.IsNullOrEmpty(txtNombre.Text))
                 {
-                    MessageBox.Show("Por favor, ingrese un nombre para eliminar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //MessageBox.Show("Por favor, ingrese un nombre en el filtro de busqueda para eliminar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    mostrarToolTip(txtNombre, "Por favor, ingrese un nombre.");
                     return;
                 }
 
@@ -330,7 +348,7 @@ namespace DataBase_connection
                 // Ejecutar la consulta para buscar a la persona por nombre
                 using (MySqlCommand comandoBuscar =  new MySqlCommand(queryBuscar, conexion))
                 {
-                    comandoBuscar.Parameters.AddWithValue("@nombre", txtNombrePersona.Text); // Asingnar el valor al parámetro
+                    comandoBuscar.Parameters.AddWithValue("@nombre", txtNombre.Text); // Asingnar el valor al parámetro
 
                     // Ejecutar la consulta y usar un lector para obtener los resultados
                     using (MySqlDataReader reader = comandoBuscar.ExecuteReader())
@@ -341,14 +359,14 @@ namespace DataBase_connection
                         }
                         else
                         {
-                            MessageBox.Show("No se encontró una persona con el nombre: " + txtNombrePersona.Text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("No se encontró una persona con el nombre: " + txtNombre.Text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                     }
                 }
 
                 // Confirmar la eliminación mostrando los detalles de la persona
-                var confirmResult = MessageBox.Show("¿Está seguro de que desea eliminar el registro de: " + txtNombrePersona.Text + "?","Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var confirmResult = MessageBox.Show("¿Está seguro de que desea eliminar el registro de: " + txtNombre.Text + "?","Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (confirmResult == DialogResult.No)
                 {
@@ -356,16 +374,13 @@ namespace DataBase_connection
                 }
 
                 transaction = conexion.BeginTransaction(); // Iniciar la transacción
-
                 string query = "DELETE FROM personas WHERE id = @id;"; // Script para eliminar
-
                 int flag = 0; // Para verificar el resultado de la consulta
 
                 using (MySqlCommand comando = new MySqlCommand(query, conexion, transaction)) // Se añade la transacción para asegurarse de que la consulta se ejecute dentro de la transacción iniciada
                 {
                     // Asignar los valores a los parámetros de manera segura
                     comando.Parameters.AddWithValue("@id", idPersona);
-
                     flag = comando.ExecuteNonQuery(); // // Si es 1, la eliminación fue exitosa, si es 0, no se encontró el registro
                 }
 
@@ -373,22 +388,19 @@ namespace DataBase_connection
                 if (flag == 1)
                 {
                     transaction.Commit(); // Confirmar la transacción
-
-                    MessageBox.Show("El registro de la persona: " + txtNombrePersona.Text + " se ha eliminado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("El registro de la persona: " + txtNombre.Text + " se ha eliminado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     MessageBox.Show("Ocurrio algo, no se encontro el registro!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                txtNombrePersona.Clear();
-
+                txtNombre.Clear();
                 consulta(); // ACtualizar los datos en la interfaz
             }
             catch (Exception ex)
             {
                 transaction?.Rollback(); // Si ocurre un error, revertir la transacción
-
                 MessageBox.Show("Error al eliminar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -412,18 +424,14 @@ namespace DataBase_connection
                 // Verificar si el campo de nombre está vacío antes de proceder
                 if (string.IsNullOrEmpty(txtNombre.Text))
                 {
-                    MessageBox.Show("Por favor, ingrese un nombre para eliminar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //MessageBox.Show("Por favor, ingrese un nombre en el filtro de busqueda para actualizar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    mostrarToolTip(txtNombre, "Por favor, ingrese un nombre.");
                     return;
                 }
 
-                validarCamposLlenos();
+                if (!validarCamposLlenos()) return;
 
-                // Validar que el campo edad sea un número entero
-                if (!int.TryParse(txtEdadPersona.Text, out int edad))
-                {
-                    MessageBox.Show("La edad debe ser un número entero.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                if (!validarEdad()) return;
 
                 // Consulta para obtener el ID de la persona según el nombre
                 string queryBuscar = "SELECT id FROM personas WHERE nombre = @nombre;";
@@ -465,9 +473,7 @@ namespace DataBase_connection
                 }
 
                 transaction = conexion.BeginTransaction(); // Iniciar la transacción
-
                 string query = "UPDATE personas SET nombre = @nombre, edad = @edad, pais = @pais, nit = @nit WHERE id = @id;";
-
                 int flag = 0; // Para verificar el resultado de la consulta
 
                 using (MySqlCommand comandoActualizar = new MySqlCommand(query, conexion, transaction))
@@ -475,7 +481,7 @@ namespace DataBase_connection
                     // Asignar los valores a los parámetros de manera segura
                     comandoActualizar.Parameters.AddWithValue("@id", idPersona);
                     comandoActualizar.Parameters.AddWithValue("@nombre", txtNombrePersona.Text);
-                    comandoActualizar.Parameters.AddWithValue("@edad", edad); // Usar el valor entero para la edad
+                    comandoActualizar.Parameters.AddWithValue("@edad", int.Parse(txtEdadPersona.Text));
                     comandoActualizar.Parameters.AddWithValue("@pais", txtPaisPersona.Text);
                     comandoActualizar.Parameters.AddWithValue("@nit", txtNitPersona.Text);
 
@@ -487,7 +493,6 @@ namespace DataBase_connection
                 if (flag == 1)
                 {
                     transaction.Commit(); // Confirmar la transacción
-
                     MessageBox.Show("El registro de la persona: " + txtNombre.Text + " se ha actualizado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -496,15 +501,12 @@ namespace DataBase_connection
                 }
 
                 txtNombre.Clear();
-
                 limpiarCampos();
-
                 consulta();
             }
             catch (Exception ex)
             {
                 transaction?.Rollback(); // Si ocurre un error, revertir la transacción
-
                 MessageBox.Show("Error al actualizar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
