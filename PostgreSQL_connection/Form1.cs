@@ -112,7 +112,6 @@ namespace PostgreSQL_connection
             // Verificar si el campo de nombre está vacío antes de proceder
             if (string.IsNullOrEmpty(txtNombreConsulta.Text))
             {
-                //MessageBox.Show("Por favor, ingrese un nombre en el filtro de busqueda para eliminar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 mostrarToolTip(txtNombreConsulta, "Por favor, ingrese un nombre.");
                 return;
             }
@@ -127,7 +126,6 @@ namespace PostgreSQL_connection
             // Verificar si el campo de nombre está vacío antes de proceder
             if (string.IsNullOrEmpty(txtNombreConsulta.Text))
             {
-                //MessageBox.Show("Por favor, ingrese un nombre en el filtro de busqueda para actualizar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 mostrarToolTip(txtNombreConsulta, "Por favor, ingrese un nombre.");
                 return;
             }
