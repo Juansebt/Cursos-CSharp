@@ -35,6 +35,45 @@ namespace PostgreSQL_connection
             txtPaisConsulta.Clear();
         }
 
+        public void limpiarCampos()
+        {
+            txtNombrePersona.Clear();
+            txtEdadPersona.Clear();
+            txtPaisPersona.Clear();
+            txtNitPersona.Clear();
+        }
+
+        public bool validarCamposLlenos()
+        {
+            // Validar que todos los campos estén llenos antes de ejecutar la consulta
+            if (string.IsNullOrWhiteSpace(txtNombrePersona.Text) ||
+                string.IsNullOrWhiteSpace(txtEdadPersona.Text) ||
+                string.IsNullOrWhiteSpace(txtPaisPersona.Text) ||
+                string.IsNullOrWhiteSpace(txtNitPersona.Text))
+            {
+                MessageBox.Show("Todos los campos del formulario deben estar llenos.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
+        private bool validarEdad()
+        {
+            if (string.IsNullOrWhiteSpace(txtEdadPersona.Text))
+            {
+                return true; // Si no hay edad ingresada, no validamos
+            }
+
+            if (!int.TryParse(txtEdadPersona.Text, out _))
+            {
+                MessageBox.Show("La edad debe ser un número entero.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEdadPersona.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
         private void btnConsultar_Click(object sender, EventArgs e)
         {
             var consulta = string.IsNullOrEmpty(txtPaisConsulta.Text) && string.IsNullOrEmpty(txtNombreConsulta.Text)
@@ -46,6 +85,16 @@ namespace PostgreSQL_connection
             // Asignar la consulta al DataGridView
             dgvConsulta.DataSource = consulta;
             limpiarCamposFiltro();
+        }
+
+        private void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            if (!validarCamposLlenos()) return;
+            if (!validarEdad()) return;
+
+            conexionDB.insertar(txtNombrePersona.Text, int.Parse(txtEdadPersona.Text), txtPaisPersona.Text, txtNitPersona.Text);
+            dgvConsulta.DataSource = conexionDB.consulta();
+            limpiarCampos();
         }
     }
 }

@@ -45,6 +45,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtPaisConsulta = new System.Windows.Forms.TextBox();
             this.btnConsultar = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtEdadPersona = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsulta)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,7 +74,7 @@
             // 
             this.txtNombrePersona.Location = new System.Drawing.Point(19, 55);
             this.txtNombrePersona.Name = "txtNombrePersona";
-            this.txtNombrePersona.Size = new System.Drawing.Size(188, 26);
+            this.txtNombrePersona.Size = new System.Drawing.Size(128, 26);
             this.txtNombrePersona.TabIndex = 2;
             // 
             // label1
@@ -87,7 +89,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(223, 29);
+            this.label2.Location = new System.Drawing.Point(323, 29);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 20);
             this.label2.TabIndex = 5;
@@ -95,15 +97,15 @@
             // 
             // txtPaisPersona
             // 
-            this.txtPaisPersona.Location = new System.Drawing.Point(223, 55);
+            this.txtPaisPersona.Location = new System.Drawing.Point(323, 55);
             this.txtPaisPersona.Name = "txtPaisPersona";
-            this.txtPaisPersona.Size = new System.Drawing.Size(188, 26);
+            this.txtPaisPersona.Size = new System.Drawing.Size(128, 26);
             this.txtPaisPersona.TabIndex = 4;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(427, 29);
+            this.label3.Location = new System.Drawing.Point(474, 29);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(38, 20);
             this.label3.TabIndex = 7;
@@ -111,9 +113,9 @@
             // 
             // txtNitPersona
             // 
-            this.txtNitPersona.Location = new System.Drawing.Point(427, 55);
+            this.txtNitPersona.Location = new System.Drawing.Point(478, 55);
             this.txtNitPersona.Name = "txtNitPersona";
-            this.txtNitPersona.Size = new System.Drawing.Size(188, 26);
+            this.txtNitPersona.Size = new System.Drawing.Size(128, 26);
             this.txtNitPersona.TabIndex = 6;
             // 
             // btnRegistrar
@@ -124,6 +126,7 @@
             this.btnRegistrar.TabIndex = 8;
             this.btnRegistrar.Text = "REGISTRAR";
             this.btnRegistrar.UseVisualStyleBackColor = true;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
             // dgvConsulta
             // 
@@ -195,11 +198,29 @@
             this.btnConsultar.UseVisualStyleBackColor = true;
             this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(170, 29);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 20);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "EDAD:";
+            // 
+            // txtEdadPersona
+            // 
+            this.txtEdadPersona.Location = new System.Drawing.Point(170, 55);
+            this.txtEdadPersona.Name = "txtEdadPersona";
+            this.txtEdadPersona.Size = new System.Drawing.Size(128, 26);
+            this.txtEdadPersona.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(893, 542);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtEdadPersona);
             this.Controls.Add(this.btnConsultar);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtPaisConsulta);
@@ -244,6 +265,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtPaisConsulta;
         private System.Windows.Forms.Button btnConsultar;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtEdadPersona;
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -149,6 +150,39 @@ namespace PostgreSQL_connection
             {
                 MessageBox.Show("Error al realizar la consulta por el pais: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
+            }
+        }
+
+        public void insertar(string nombre, int edad, string pais, string nit)
+        {
+            if (!verificarConexion()) return;
+
+            NpgsqlTransaction transaction = null; // Declarar la transacción 
+
+            try
+            {
+                string query = "INSERT INTO \"Personas\" (nombre, edad, pais, nit) VALUES (@nombre, @edad, @pais, @nit);";
+                transaction = conexion.BeginTransaction();
+
+                using (NpgsqlCommand conector = new NpgsqlCommand(query, conexion))
+                {
+                    conector.Parameters.AddWithValue("@nombre", nombre);
+                    conector.Parameters.AddWithValue("@edad", edad);
+                    conector.Parameters.AddWithValue("@pais", pais);
+                    conector.Parameters.AddWithValue("@nit", nit);
+
+                    conector.ExecuteNonQuery();
+                }
+
+                transaction.Commit(); // Si no ocurre ningún error, confirmar la transacción
+                MessageBox.Show($"La persona: {nombre} se ha agregado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                consulta();
+                conexion.Close();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                MessageBox.Show("Error al insertar la persona: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
