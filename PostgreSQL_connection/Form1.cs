@@ -28,5 +28,24 @@ namespace PostgreSQL_connection
         {
             conexionDB.desconectarDataBase(); // Llamamos a la función para desconectar la base de datos
         }
+
+        public void limpiarCamposFiltro()
+        {
+            txtNombreConsulta.Clear();
+            txtPaisConsulta.Clear();
+        }
+
+        private void btnConsultar_Click(object sender, EventArgs e)
+        {
+            var consulta = string.IsNullOrEmpty(txtPaisConsulta.Text) && string.IsNullOrEmpty(txtNombreConsulta.Text)
+                ? conexionDB.consulta() // Si ambos campos están vacíos
+                : !string.IsNullOrEmpty(txtNombreConsulta.Text)
+                    ? conexionDB.consultaPorNombre(txtNombreConsulta.Text) // Si el campo país tiene valor
+                    : conexionDB.consultaPorPais(txtPaisConsulta.Text); // Si solo el campo nombre tiene valor
+
+            // Asignar la consulta al DataGridView
+            dgvConsulta.DataSource = consulta;
+            limpiarCamposFiltro();
+        }
     }
 }

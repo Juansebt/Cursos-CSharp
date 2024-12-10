@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace PostgreSQL_connection
         static int port = 5432;
         static string username = "postgres";
         static string password = "admin";
-        static string dbName = "inventario";
+        static string dbName = "prueba";
 
         static string conexionString = $"Host={host};Port={port};Username={username};Password={password};Database={dbName};"; // Cadena de conexión para PostgreSQL
         NpgsqlConnection conexion = new NpgsqlConnection(conexionString); // Objeto de conexión para PostgreSQL
@@ -45,6 +46,109 @@ namespace PostgreSQL_connection
             catch (Exception ex)
             {
                 MessageBox.Show("Error al desconectar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool verificarConexion()
+        {
+            try
+            {
+                // Verificar si la conexión está abierta
+                if (conexion.State == ConnectionState.Open)
+                {
+                    return true;
+                }
+                else
+                {
+                    conexion.Open(); // Intentar abrir la conexión si no está abierta
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores: si hay una excepción, la conexión no es válida
+                MessageBox.Show("Error al conectar a la base de datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public DataTable consulta()
+        {
+            if (!verificarConexion()) return null;
+
+            try
+            {
+                string query = "SELECT * FROM \"Personas\""; // Definir la consulta SQL
+                // \"_"\ se usa para que el query pueda leer tablas o propiedades que inician en mayuscula
+
+                using (NpgsqlCommand conector = new NpgsqlCommand(query, conexion))
+                {
+                    using (NpgsqlDataAdapter datos = new NpgsqlDataAdapter(conector))
+                    {
+                        DataTable tabla = new DataTable();
+                        datos.Fill(tabla); // Llenar el DataTable con los resultados
+                        return tabla; // Retornar el DataTable con los resultados
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Devolver null en caso de error
+            }
+        }
+
+        public DataTable consultaPorNombre(string nombre)
+        {
+            if (!verificarConexion()) return null;
+
+            try
+            {
+                string query = "SELECT * FROM \"Personas\" WHERE nombre = @nombre";
+
+                using (NpgsqlCommand conector = new NpgsqlCommand(query, conexion))
+                {
+                    conector.Parameters.AddWithValue("@nombre", nombre);
+
+                    using (NpgsqlDataAdapter datos = new NpgsqlDataAdapter(conector))
+                    {
+                        DataTable tabla = new DataTable();
+                        datos.Fill(tabla);
+                        return tabla;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta por el nombre: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public DataTable consultaPorPais(string pais)
+        {
+            if (!verificarConexion()) return null;
+
+            try
+            {
+                string query = "SELECT * FROM \"Personas\" WHERE pais = @pais";
+
+                using (NpgsqlCommand conector = new NpgsqlCommand(query, conexion))
+                {
+                    conector.Parameters.AddWithValue("@pais", pais);
+
+                    using (NpgsqlDataAdapter datos = new NpgsqlDataAdapter(conector))
+                    {
+                        DataTable tabla = new DataTable();
+                        datos.Fill(tabla);
+                        return tabla;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta por el pais: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
         }
     }
