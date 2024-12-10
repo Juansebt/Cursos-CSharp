@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -177,12 +178,92 @@ namespace PostgreSQL_connection
                 transaction.Commit(); // Si no ocurre ningún error, confirmar la transacción
                 MessageBox.Show($"La persona: {nombre} se ha agregado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 consulta();
-                conexion.Close();
             }
             catch (Exception ex)
             {
                 transaction?.Rollback();
                 MessageBox.Show("Error al insertar la persona: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
+            }
+        }
+
+        public void eliminar(string nombre)
+        {
+            if (!verificarConexion()) return;
+
+            NpgsqlTransaction transaction = null; // Declarar la transacción 
+
+            try
+            {
+                string queryBuscar = "SELECT * FROM \"Personas\" WHERE nombre = @nombre"; // Consulta para obtener el ID de la persona según el nombre
+                int idPersona = 0; // Almacenará el ID de la persona a eliminar
+
+                using(NpgsqlCommand comandoBuscar = new NpgsqlCommand(queryBuscar, conexion))
+                {
+                    comandoBuscar.Parameters.AddWithValue("@nombre", nombre);
+
+                    using(NpgsqlDataReader reader = comandoBuscar.ExecuteReader())
+                    {
+                        if (reader.Read()) // Verificar si se encontró un resultado
+                        {
+                            idPersona = reader.GetInt32(0); // Obtener el ID de la persona desde el resultado de la consulta - indice
+                        }
+                        else
+                        {
+                            MessageBox.Show($"No se encontró una persona con el nombre: {nombre}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                }
+
+                // Confirmar la eliminación mostrando los detalles de la persona
+                var confirmResult = MessageBox.Show($"¿Está seguro de que desea eliminar el registro de: {nombre}?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmResult == DialogResult.No)
+                {
+                    return; // Si el usuario cancela la eliminación, salir de la función
+                }
+
+                string query = "DELETE FROM \"Personas\" WHERE id = @id;";
+                transaction = conexion.BeginTransaction(); // Inciar la transacción
+                int flag = 0; // Para verificar el resultado de la consulta
+
+                using(NpgsqlCommand conector = new NpgsqlCommand(query, conexion, transaction)) // Se añade la transacción para asegurarse de que la consulta se ejecute dentro de la transacción iniciada
+                {
+                    conector.Parameters.AddWithValue("@id", idPersona);
+                    flag = conector.ExecuteNonQuery(); // Si es 1, la eliminación fue exitosa, si es 0, no se encontró el registro
+                }
+
+                // Verificar si se eliminó algún registro
+                if (flag == 1)
+                {
+                    transaction.Commit(); // Confirmar la transacción
+                    MessageBox.Show($"El registro de la persona: {nombre} se ha eliminado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrio algo, no se encontro el registro!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                consulta();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                MessageBox.Show("Error al insertar la persona: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
             }
         }
     }

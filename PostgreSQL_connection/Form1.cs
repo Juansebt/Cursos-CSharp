@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PostgreSQL_connection
 {
     public partial class Form1 : Form
     {
+        private System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip(); // Instancia global de ToolTip en la clase
+
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +30,13 @@ namespace PostgreSQL_connection
         private void btnDesconectar_Click(object sender, EventArgs e)
         {
             conexionDB.desconectarDataBase(); // Llamamos a la función para desconectar la base de datos
+        }
+
+        private void mostrarToolTip(Control control, string mensaje)
+        {
+            toolTip.ToolTipTitle = "Campo requerido";
+            toolTip.Show(mensaje, control, 0, -20, 3000); // Mostrar el tooltip durante 3 segundos
+            control.Focus(); // Enfocar el control vacío
         }
 
         public void limpiarCamposFiltro()
@@ -95,6 +105,21 @@ namespace PostgreSQL_connection
             conexionDB.insertar(txtNombrePersona.Text, int.Parse(txtEdadPersona.Text), txtPaisPersona.Text, txtNitPersona.Text);
             dgvConsulta.DataSource = conexionDB.consulta();
             limpiarCampos();
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            // Verificar si el campo de nombre está vacío antes de proceder
+            if (string.IsNullOrEmpty(txtNombreConsulta.Text))
+            {
+                //MessageBox.Show("Por favor, ingrese un nombre en el filtro de busqueda para eliminar.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                mostrarToolTip(txtNombreConsulta, "Por favor, ingrese un nombre.");
+                return;
+            }
+
+            conexionDB.eliminar(txtNombreConsulta.Text);
+            dgvConsulta.DataSource = conexionDB.consulta();
+            txtNombreConsulta.Clear();
         }
     }
 }
