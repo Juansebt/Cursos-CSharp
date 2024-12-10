@@ -177,7 +177,6 @@ namespace PostgreSQL_connection
 
                 transaction.Commit(); // Si no ocurre ningún error, confirmar la transacción
                 MessageBox.Show($"La persona: {nombre} se ha agregado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                consulta();
             }
             catch (Exception ex)
             {
@@ -250,13 +249,87 @@ namespace PostgreSQL_connection
                 {
                     MessageBox.Show("Ocurrio algo, no se encontro el registro!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-
-                consulta();
             }
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                MessageBox.Show("Error al insertar la persona: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al eliminar la persona: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexion.State == ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
+            }
+        }
+
+        public void actualizar(string nombreConsulta, string nombre, int edad, string pais, string nit)
+        {
+            if (!verificarConexion()) return;
+
+            NpgsqlTransaction transaction = null; 
+
+            try
+            {
+                string queryBuscar = "SELECT * FROM \"Personas\" WHERE nombre = @nombreConsulta";
+                int idPersona = 0;
+
+                using (NpgsqlCommand comandoBuscar = new NpgsqlCommand(queryBuscar, conexion))
+                {
+                    comandoBuscar.Parameters.AddWithValue("@nombreConsulta", nombreConsulta);
+
+                    using (NpgsqlDataReader reader = comandoBuscar.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            idPersona = reader.GetInt32(0); 
+                        }
+                        else
+                        {
+                            MessageBox.Show($"No se encontró una persona con el nombre: {nombreConsulta}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                }
+
+                var confirmResult = MessageBox.Show($"¿Está seguro de actualizar el registro de: {nombreConsulta}?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmResult == DialogResult.No)
+                {
+                    return;
+                }
+
+                string query = "UPDATE \"Personas\" SET nombre = @nombre, edad = @edad, pais = @pais, nit = @nit WHERE id = @id;";
+                transaction = conexion.BeginTransaction();
+                int flag = 0;
+
+                using (NpgsqlCommand conector = new NpgsqlCommand(query, conexion, transaction))
+                {
+                    conector.Parameters.AddWithValue("@id", idPersona);
+                    conector.Parameters.AddWithValue("@nombre", nombre);
+                    conector.Parameters.AddWithValue("@edad", edad);
+                    conector.Parameters.AddWithValue("@pais", pais);
+                    conector.Parameters.AddWithValue("@nit", nit);
+
+                    flag = conector.ExecuteNonQuery();
+                    int rowsAffected = conector.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        transaction.Commit();
+                        MessageBox.Show($"El registro de la persona: {nombreConsulta} se ha actualizado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo actualizar el registro.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                MessageBox.Show("Error al actualizar la persona: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
