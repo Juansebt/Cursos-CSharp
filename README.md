@@ -42,6 +42,7 @@ Este proyecto es un programa simple en C# que muestra cómo usar diferentes tipo
   - **MySQL**: Para conectarse a una base de datos MySQL, se utiliza la librería `MySql.Data.MySqlClient`. 
   - **PostgreSQL**: Para conectarse a una base de datos PostgreSQL, se utiliza la librería `Npgsql`. 
   - **SQL Server**: Para conectarse a una base de datos SQL Server, se utiliza la librería `System.Data.SqlClient`. 
+  - **MongoDB**: Para conectarse a una base de datos no relacional - MongoDB, se utiliza la librería `MongoDB.Driver - MongoDB.Bson`. 
 
 ## Requisitos
 

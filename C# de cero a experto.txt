@@ -1,0 +1,321 @@
+C# de cero a experto
+C# -- 2000 Anders Hejlsberg
+
+VARIABLES Y CONSTANTES:
+|
+|--- los datos guardados en las variables se pueden modificar. Los datos pueden variar (peso, edad, altura)
+|
+|--- en las contantes no se pueden modificar los datos guardados en ellas, solo se pueden obtener. Los datos no varían (fecha de nacimiento, identificación)
+
+Tipos de datos: primitivos
+|
+|--- numéricos: byte, short, integer, long, decimal, double
+|
+|--- texto: strgin, chart
+|
+|--- lógico: boolean
+
+Estructura para crear una variable: <tipo de valor><nombre de la variabel>=<valor>; // int edad = 50; // const int edad = 50; #esto es una constante
+
+configuración e instalación
+
+- Descargar el SDK de .NET e instalarlo
+- La IDE para C# es Visual Studio, pero también se puede en VSCode
+
+crear proyecto de .NET
+
+- terminal: dotnet new console (proyecto para ejecutar desde la consola) // dotnet new console -n HelloWorld
+
+- ejecutar: dotnet run (desde la consola)****
+
+Console.WriteLine("Hello, World!"); //Hola mundo
+
+Para comentar: // or /**/
+
+C# es un lenguaje fuertemete tipado --- se debe definir el tipo de dato
+
+string myString = "Esto es un cadena de texto";
+int myInt = 1;
+float myFloat = 6.5f; // f como sufijo indica que es de tipo float porque por defecto en c# los decimales se tratan como double, m como sufijo - decimal
+double myDouble = 2.5;
+
+- tipo de dato: Dynamic permite el cambio de tipos datos al momento de guardar en la variable - datos dinámicos 
+
+- Arrays: var myArray = new string[] {"Juan", "Yara", "Juanse"}; //Array de tipo string
+
+- Diccionarios: relación clave valor
+var myDictionary = new Dictionary<string, int>
+            {
+                {"juanse", 21},
+                {"sebass", 20},
+                {"jonass", 19}
+            };
+- Sets: var mySet = new HashSet<string> { "sebastián", "juan", "jonass" };
+
+- Tuplas: var myTuple = ("sebastián", "juan", "jonass");
+
+
+RESUMEN:
+Tipos de datos primitivos: Explica cómo manejar int, float, double, bool, y tipos dinámicos.
+Interpolación de cadenas: Muestra cómo usar interpolación para combinar variables en una cadena.
+Constantes: Muestra cómo definir constantes que no pueden cambiar.
+Estructuras de datos: Uso de arrays, diccionarios, conjuntos (hashsets), y tuplas.
+Bucles y condicionales: Ejemplos de bucles for y foreach y condicionales if-else.
+Funciones: Definición y uso de funciones con y sin retorno de valores.
+Clases: Cómo definir una clase con propiedades y un constructor, y cómo crear instancias de la clase.
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+C# -- es orientado a objetos -- basado en el lenguaje C
+
+Entorno de desarrollo: Visual Studio
+
+aplicación de escritorio -- Aplicación de Windows form (.NET)
+
+documentar código:
+/// <summary>
+/// Texto va acá.
+/// </summary>
+
+comentario:
+// comentario de una lineal
+
+/*
+* Comentario de múltiples líneas
+*/
+
+Variables y los tipos de datos: espacio en memoria donde vamos a guardar datos para ejecutar 
+
+DateTime Fecha =  DateTime.Today; //Tipo de dato para fechas
+
+constantes = no se puede cambiar la información guardada en la variable
+
+mbox (mas doble tap) // MessageBox.Show("Test"); muestra un caja o ventana con un mensaje para hacer test - Alertas //solo muestra texto
+MessageBox.Show(Num1.ToString()); //conversión de int a string
+
+concatenar texto: lblTexto.Text = "Bienvenido a mi primer formulario " + textoDelTexBox; // MessageBox.Show("Error: " + ex);
+
+condicionales: (login basic)
+
+if (user == "admin" & password == "admin")
+{
+    MessageBox.Show("Usuario correcto!, puedes pasar");
+}
+else
+{
+    MessageBox.Show("Usuario incorrecto!, intenta de nuevo");
+}
+
+switch case:
+switch (password)
+{
+    case "admin":
+        MessageBox.Show("Usuario administrador, puedes pasar", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        break;
+
+    default:
+        MessageBox.Show("Contraseña incorrecta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        break;
+}
+
+bucles:
+
+for (int i = 0; i < length; i++)
+{
+    
+}
+
+foreach (var item in var)
+{
+    
+}
+
+while (x < 10)
+{
+    var += x.ToString() + " - ";
+    x++;
+}
+
+do
+{
+    var += x.ToString() + " - ";
+    x++;
+}
+while (x > 10);
+
+
+arreglos / vectores:
+
+declaración: int[] numeros = new int[5]; /se especifica el tipo y el tamaño
+
+agregar elementos: numeros[0] = 1; /el número del corchete indica la posición
+
+
+matrices: filas y columnas /arreglo bidimensional
+
+declaración: tipo[,] nombreMatriz = new tipo[filas, columnas]; / int[,] matriz = new int[3, 5]; 
+
+agregar elementos:
+numeros[0, 1] = 2;
+numeros[0, 2] = 3;
+numeros[0, 3] = 4;
+numeros[0, 4] = 5;
+
+.GetLength(0) = número de filas
+.GetLength(1) = número de columnas
+
+
+arraylist: guarda cualquier tipo de dato dentro de el
+
+declaración: ArrayList lista = new ArrayList();
+agregar:
+lista.Add(1);
+lista.Add("Juan");
+
+listas - list<> : guarda un datos de un solo tipo
+declaración: List<int> lista = new List<int>();
+agregar: lista.Add(1);
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PORGRAMACIÓN ORIENTADA A OBJETOS POO C#
+
+Paradigma de programación basado en el concepto de objetos, que son instancias de clases. En este enfoque, el software se estructura en términos de objetos que interactúan entre sí para realizar diversas tareas.
+
+Objetos: Entidad provista de un conjunto de propiedades o atributos (variables) y un comportamiento o funcionalidad (métodos), que reaccionan a eventos
+
+Clases: Definición de la estructura y comportamiento de un objeto
+
+Una clase es un modelo o plantilla que define las propiedades (atributos) y comportamientos (métodos) que los objetos de ese tipo tendrán.
+Un objeto es una instancia concreta de una clase, que puede almacenar datos y realizar acciones según los métodos definidos en la clase.
+
+crear una clase: click derecho abajo de la solución C#, agregar nuevo elemento / plantilla de la clase -- agregar el nombre a la clase
+la clase tiene atributos (variables representativas de la clase) // public string Marca; 
+también tiene  métodos que define el comportamiento que tendrá la clase
+
+Namespace: espacio con un nombre donde se tendrá un conjunto de objetos relacionados como lo pueden ser las clases, este organiza y agrupa identificadores, como variables, funciones, clases u objetos, de manera que se eviten conflictos de nombres. Esto es útil cuando hay varios elementos con el mismo nombre en diferentes contextos o módulos, ya que permite diferenciarlos adecuadamente.
+
+Variables publicas: son aquellas que pueden ser accedidas y modificadas desde cualquier parte del código, tanto desde dentro de la clase como desde fuera, es decir, desde otros objetos o clases.
+
+Variables privadas: son aquellas que no pueden ser accedidas directamente desde fuera de la clase. El acceso a estas variables está restringido y controlado a través de métodos específicos (como getters y setters). Esto asegura que la manipulación de los datos sea controlada, lo que mejora la seguridad y estabilidad del código.
+
+Método constructor: es una que se ejecuta automáticamente cuando se crea (o "instancia") un objeto a partir de una clase. Su función principal es inicializar los atributos del objeto, es decir, asignarles valores iniciales o ejecutar acciones necesarias para la correcta configuración del objeto. //creación: ctor + doble tap
+
+Métodos que retornan valores: cuando lleva el void no retorna nada, de lo contrario se debe especificar el tipo de dato que va a retornar y lleva un return
+
+Métodos y variables estáticos: Estos miembros estáticos están asociados con la clase en sí misma, en lugar de estar asociados con instancias específicas de la clase. Esto significa que puedes acceder a métodos y variables estáticos sin necesidad de crear un objeto de la clase.
+
+Métodos GET y SET: son parte de las propiedades de una clase y se utilizan para controlar el acceso a los campos o variables privadas de un objeto. Las propiedades permiten encapsular el estado interno de un objeto, proporcionando un nivel de control sobre cómo se leen y escriben los valores de los campos.
+
+GET: Es un método que permite obtener (leer) el valor de una propiedad. Cuando se accede a la propiedad, el método get se ejecuta y devuelve el valor del campo correspondiente.
+
+ctrl + punto -> encapsular campo (tanto para get como set)
+
+SET: Es un método que permite asignar (escribir) un valor a una propiedad. Cuando se asigna un valor a la propiedad, el método set se ejecuta y actualiza el valor del campo.
+
+
+Manejo de Archivos de texto .txt:
+
+librería: using System.IO;
+
+Escribir: 
+TextWriter Escribe = new StreamWriter("Test.txt"); //creamos un objeto de tipo TextWriter y le asignamos un nombre, este lo guarda en la carpeta raiz
+
+Escribe.WriteLine("Hola mundo!"); //contenido del archivo
+
+Escribe.Close(); //cerrar recursos - objeto
+
+
+Leer:
+
+TextReader Leer = new StreamReader("Test.txt"); //creamos un objeto y especificamos la ruta del archivo
+
+MessageBox.Show(Leer.ReadLine()); //leer el contenido del archivo - una sola linea
+
+MessageBox.Show(Leer.ReadToEnd()); //lee todos los caracteres
+
+Leer.Close();
+
+
+
+CONEXIÓN A BASES DE DATOS: PostgreSQL / MySQL
+
+//instalar desde la consola del Administrador de Paquetes NuGet:
+Install-Package MySql.Data //instalar paquete de mysqlData
+Install-Package Npgsql //instalar paquete npgsql de PostgreSQL -- verificar que sea compatible con el marco de trabajo
+Install-Package Npgsql -Version 6.0.9 //otra versión
+
+using System.Data.SqlClient; //Libreria para conectarnos a base de datos SQL server
+using MySql.Data.MySqlClient; //Librería para conectarse a MySQL
+using Npgsql; // Librería para conectarse a PostgreSQL
+
+static string conexion_string_sqlserver = "server = localhost; database = pokemon88 ; integrated security = true"; //cadena de conexión
+SqlConnection conexion = new SqlConnection(conexion_string_sqlserver); //objeto de conexión SQL Server
+
+static string conexion_string_mysql = "server=localhost;database=pokemon88;user=root;password=;"; // Cadena de conexión para MySQL
+MySqlConnection conexion = new MySqlConnection(conexion_string_mysql); // Objeto de conexión de MySQL
+
+static string conexion_string = "Host=localhost;Port=5432;Username=postgres;Password=admin;Database=inventario;"; // Cadena de conexión para PostgreSQL
+NpgsqlConnection conexion = new NpgsqlConnection(conexion_string); // Objeto de conexión para PostgreSQL
+
+TENER EN CUENTA:
+Variables de conexión a base de datos en PostgreSQL:
+- host: localhost 
+- port: 5432
+- nombre de la base de datos: postgres
+- user: postgres 
+- password: admin
+
+Variables de conexión a base de datos en MySQL: 
+- host/server: localhost 
+- user: root
+- password: (sin contraseña)
+- nombre de la base de datos
+- port: 3306 //no se especifica al momento de establecer la conexión
+
+Variables de conexión a base de datos en SQL Server: 
+- host/server: localhost 
+- nombre de la base de datos 
+- integrated security = true
+- port: 1433 //no se especifica al momento de establecer la conexión
+
+CONEXIÓN CON MONGO:
+
+Install-Package MongoDB.Driver //Librería
+
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
+
+// Definir las credenciales y nombre de la base de datos
+static string dbUsername = "admin"; // Nombre de usuario de la base de datos
+static string dbPassword = "admin"; // Contraseña de la base de datos
+static string dbName = "personas"; // Nombre de tu base de datos
+
+// URI de conexión a MongoDB, incluye las credenciales de autenticación y el nombre del cluster
+static string uri = $"mongodb+srv://{dbUsername}:{dbPassword}@cluster0.8seip.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Se almacenan la referencia a la base de datos y el cliente de MongoDB
+private static IMongoDatabase database;
+private static MongoClient cliente;
+
+private bool conectado = false; // Verificar si la conexión está activa
+
+// Método para establecer la conexión a la base de datos
+public void establecerConexion()
+{
+    try
+    {
+        cliente = new MongoClient(uri); // Crea un cliente de MongoDB utilizando la URI con las credenciales
+        database = cliente.GetDatabase(dbName); // Conecta a la base de datos especificada por `dbName`
+
+        conectado = true; // Marca la conexión como activa
+        MessageBox.Show($"Conexión establecida con éxito a la base de datos: {dbName}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+    catch (Exception ex)
+    {
+        conectado=false;
+        MessageBox.Show("Error al conectarse a la base de datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
