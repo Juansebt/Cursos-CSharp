@@ -109,12 +109,12 @@ namespace MongoDB_connection
             }
         }
 
-        // Verificar si estas conectado a la base de datos, si no conectarse
-        public bool verificarConexion()
+        // Verifica si la conexión a la base de datos está activa. Si no lo está, intenta conectarse.
+        private bool verificarConexion()
         {
             try
             {
-                if (!conectado)
+                if (!conectado) // Verifica si ya está conectado
                 {
                     cliente = new MongoClient(uriLocal);
                     database = cliente.GetDatabase(dbName);
@@ -122,7 +122,7 @@ namespace MongoDB_connection
                     conectado = true; // Marca la conexión como activa
                     return true;
                 }
-                return true;
+                return true; // Si ya estaba conectado, retorna true
             }
             catch (Exception ex)
             {
@@ -131,44 +131,50 @@ namespace MongoDB_connection
             }
         }
 
-        // Método para verificar si la conexión está activa
+        // Devuelve el estado actual de la conexión a la base de datos.
         public bool estaConectado()
         {
             return conectado; // Retorna el estado de la conexión
         }
 
-        // Consulta
+        // Convierte una lista de documentos de MongoDB en un DataTable.
+        private DataTable convertirDocumentosADataTable(List<BsonDocument> documentos)
+        {
+            DataTable tabla = new DataTable();
+
+            // Definir las columnas del DataTable
+            tabla.Columns.Add("Nombre", typeof(string));
+            tabla.Columns.Add("Edad", typeof(int));
+            tabla.Columns.Add("Pais", typeof(string));
+            tabla.Columns.Add("Nit", typeof(string));
+
+            // Recorre los documentos obtenidos y los agrega al DataTable
+            foreach (var documento in documentos)
+            {
+                DataRow fila = tabla.NewRow();
+
+                // Verifica si cada campo existe en el documento antes de asignarlo
+                fila["Nombre"] = documento.Contains("nombre") ? documento["nombre"].AsString : string.Empty;
+                fila["Edad"] = documento.Contains("edad") ? documento["edad"].AsInt32 : 0;
+                fila["Pais"] = documento.Contains("pais") ? documento["pais"].AsString : string.Empty;
+                fila["Nit"] = documento.Contains("nit") ? documento["nit"].AsString : string.Empty;
+
+                tabla.Rows.Add(fila); // Añadir fila al DataTable
+            }
+
+            return tabla; // Retorna el DataTable con los resultados
+        }
+
+        // Realiza una consulta a la colección 'personas' en la base de datos de MongoDB y devuelve los resultados en un DataTable.
         public DataTable consulta()
         {
-            if (!verificarConexion()) return null; // Verificar si está conectado
+            if (!verificarConexion()) return null; // Verifica si la conexión está activa antes de ejecutar la consulta
             try
             {
-                var collection = database.GetCollection<BsonDocument>("personas"); // Nombre de la colección
-                var documentos = collection.Find(new BsonDocument()).ToList(); // Obtener todos los documentos
+                var collection = database.GetCollection<BsonDocument>("personas"); // Obtiene la colección 'personas'
+                var documentos = collection.Find(new BsonDocument()).ToList(); // Recupera todos los documentos de la colección
 
-                DataTable tabla = new DataTable();
-
-                // Definir las columnas del DataTable
-                tabla.Columns.Add("Nombre", typeof(string));
-                tabla.Columns.Add("Edad", typeof(int));
-                tabla.Columns.Add("Pais", typeof(string));
-                tabla.Columns.Add("Nit", typeof(string));
-
-                // Llenar el DataTable con los resultados de MongoDB
-                foreach (var documento in documentos)
-                {
-                    DataRow fila = tabla.NewRow();
-
-                    // Verificar si los campos existen antes de acceder a ellos
-                    fila["nombre"] = documento.Contains("nombre") ? documento["nombre"].AsString : string.Empty;
-                    fila["edad"] = documento.Contains("edad") ? documento["edad"].AsInt32 : 0;
-                    fila["pais"] = documento.Contains("pais") ? documento["pais"].AsString : string.Empty;
-                    fila["nit"] = documento.Contains("nit") ? documento["nit"].AsString : string.Empty;
-
-                    tabla.Rows.Add(fila); // Añadir fila al DataTable
-                }
-
-                return tabla;
+                return convertirDocumentosADataTable(documentos);
             }
             catch (Exception ex)
             {
@@ -176,5 +182,44 @@ namespace MongoDB_connection
                 return null;
             }
         }
+
+        // Consulta documentos por nombre en la colección 'personas'
+        public DataTable consultaPorNombre(string nombre)
+        {
+            if (!verificarConexion()) return null; // Verificar si está conectado
+            try
+            {
+                var collection = database.GetCollection<BsonDocument>("personas");
+                var filtro = Builders<BsonDocument>.Filter.Eq("nombre", nombre); // Filtro por nombre
+                var documentos = collection.Find(filtro).ToList(); // Obtener los documentos que coincidan
+
+                return convertirDocumentosADataTable(documentos);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta por nombre: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        // Consulta documentos por país en la colección 'personas'
+        public DataTable consultaPorPais(string pais)
+        {
+            if (!verificarConexion()) return null; // Verificar si está conectado
+            try
+            {
+                var collection = database.GetCollection<BsonDocument>("personas");
+                var filtro = Builders<BsonDocument>.Filter.Eq("pais", pais); // Filtro por país
+                var documentos = collection.Find(filtro).ToList(); // Obtener los documentos que coincidan
+
+                return convertirDocumentosADataTable(documentos);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta por país: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
     }
 }

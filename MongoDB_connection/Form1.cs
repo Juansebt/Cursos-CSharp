@@ -48,13 +48,25 @@ namespace MongoDB_connection
             actualizarEstadoBotones(); // Actualizar el estado de los botones después de desconectar
         }
 
+        public void limpiarCamposFiltro()
+        {
+            txtNombreConsulta.Clear();
+            txtPaisConsulta.Clear();
+        }
+
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-            var consulta = conexion.consulta(); // Realiza la consulta
+            var consulta = string.IsNullOrEmpty(txtNombreConsulta.Text) && string.IsNullOrEmpty(txtPaisConsulta.Text)
+                ? conexion.consulta() // Si ambos campos están vacíos
+                : !string.IsNullOrEmpty(txtNombreConsulta.Text)
+                    ? conexion.consultaPorNombre(txtNombreConsulta.Text) // Si el campo país tiene valor
+                    : conexion.consultaPorPais(txtPaisConsulta.Text); // Si solo el campo nombre tiene valor
+
             if (consulta != null)
             {
                 dgvConsulta.DataSource = consulta; // Asigna los resultados al DataGridView
                 actualizarEstadoBotones();
+                limpiarCamposFiltro();
             }
             else
             {
