@@ -145,5 +145,22 @@ namespace MongoDB_connection
             dgvConsulta.DataSource = conexion.consulta();
             txtNombreConsulta.Clear();
         }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtNombreConsulta.Text))
+            {
+                mostrarToolTip(txtNombreConsulta, "Por favor, ingrese un nombre.");
+                return;
+            }
+
+            if (!validarCamposLlenos()) return;
+            if (!validarEdad()) return;
+
+            conexion.actualizar(txtNombreConsulta.Text, txtNombrePersona.Text, int.Parse(txtEdadPersona.Text), txtPaisPersona.Text, txtNitPersona.Text);
+            dgvConsulta.DataSource = conexion.consulta();
+            txtNombreConsulta.Clear();
+            limpiarCampos();
+        }
     }
 }

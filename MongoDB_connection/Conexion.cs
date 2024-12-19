@@ -272,6 +272,7 @@ namespace MongoDB_connection
                     {
                         return; // Si el usuario cancela la eliminación, salir de la función
                     }
+
                     var idPersona = persona["_id"].AsObjectId; // Si la persona existe, obtiene su _id
                     var filtroEliminar = Builders<BsonDocument>.Filter.Eq("_id", idPersona); // Crear el filtro para eliminar el documento por su _id
                     var resultado = collection.DeleteOne(filtroEliminar); // Ejecutar la eliminación
@@ -287,6 +288,52 @@ namespace MongoDB_connection
             catch (Exception ex)
             {
                 MessageBox.Show("Error al eliminar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void actualizar (string nombreConsulta, string nombre, int edad, string pais, string nit)
+        {
+            if (!verificarConexion()) return;
+
+            try
+            {
+                var collection = database.GetCollection<BsonDocument>("personas");
+                var filtroNombre = Builders<BsonDocument>.Filter.Eq("nombre", nombreConsulta);
+                var persona = collection.Find(filtroNombre).FirstOrDefault();
+
+                if (persona != null)
+                {
+                    var confirmResult = MessageBox.Show($"¿Está seguro de que desea actualizar el registro de: {nombreConsulta}?", "Confirmar actualización", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (confirmResult == DialogResult.No)
+                    {
+                        return;
+                    }
+
+                    var idPersona = persona["_id"].AsObjectId; // Si la persona existe, obtiene su _id
+                    var filtroActualizar = Builders<BsonDocument>.Filter.Eq("_id", idPersona); // Crear el filtro para actualizar el documento por su _id
+
+                    // Crear la operación de actualización
+                    var update = Builders<BsonDocument>.Update
+                        .Set("nombre", nombre)
+                        .Set("edad", edad)
+                        .Set("pais", pais)
+                        .Set("nit", nit);
+
+                    var resultado = collection.UpdateOne(filtroActualizar, update); // Ejecutar la actualización
+
+                    // Verificar si el documento fue actualizado
+                    MessageBox.Show(resultado.ModifiedCount > 0 ? "Registro actualizado correctamente." : "No se pudo actualizar el registro.",
+                                    resultado.ModifiedCount > 0 ? "Éxito" : "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró ninguna persona con ese nombre.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
