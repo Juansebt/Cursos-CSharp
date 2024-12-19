@@ -251,5 +251,43 @@ namespace MongoDB_connection
             }
         }
 
+        public void eliminar(string nombre)
+        {
+            if (!verificarConexion()) return;
+
+            try
+            {
+                var collection = database.GetCollection<BsonDocument>("personas");
+
+                // Buscar el documento por nombre y obtener el _id
+                var filtroNombre = Builders<BsonDocument>.Filter.Eq("nombre", nombre);
+                var persona = collection.Find(filtroNombre).FirstOrDefault();
+
+                if (persona != null)
+                {
+                    // Confirmar la eliminación mostrando los detalles de la persona
+                    var confirmResult = MessageBox.Show($"¿Está seguro de que desea eliminar el registro de: {nombre}?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (confirmResult == DialogResult.No)
+                    {
+                        return; // Si el usuario cancela la eliminación, salir de la función
+                    }
+                    var idPersona = persona["_id"].AsObjectId; // Si la persona existe, obtiene su _id
+                    var filtroEliminar = Builders<BsonDocument>.Filter.Eq("_id", idPersona); // Crear el filtro para eliminar el documento por su _id
+                    var resultado = collection.DeleteOne(filtroEliminar); // Ejecutar la eliminación
+
+                    // Verificar si el documento fue eliminado
+                    MessageBox.Show(resultado.DeletedCount > 0 ? "Registro eliminado correctamente." : "No se pudo eliminar el registro.", resultado.DeletedCount > 0 ? "Éxito" : "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró ninguna persona con ese nombre.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
