@@ -29,6 +29,10 @@ namespace MongoDB_connection
         // URI de conexión para una instancia local de MongoDB
         static string uriLocal = $"mongodb://{host}:{port}";
 
+        /*
+         * Si has configurado la autenticación en tu instancia local, tendrás que añadir las credenciales en el URI (ejemplo: mongodb://usuario:contraseña@localhost:27017).
+        */
+
         // Se almacenan la referencia a la base de datos y el cliente de MongoDB
         private static IMongoDatabase database;
         private static MongoClient cliente;
