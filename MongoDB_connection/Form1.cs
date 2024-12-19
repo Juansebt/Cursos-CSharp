@@ -50,8 +50,16 @@ namespace MongoDB_connection
 
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-            // llamar a la función de consulta
-            MessageBox.Show("Esta función aún nonesta disponible...");
+            var consulta = conexion.consulta(); // Realiza la consulta
+            if (consulta != null)
+            {
+                dgvConsulta.DataSource = consulta; // Asigna los resultados al DataGridView
+                actualizarEstadoBotones();
+            }
+            else
+            {
+                MessageBox.Show("No se pudo realizar la consulta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

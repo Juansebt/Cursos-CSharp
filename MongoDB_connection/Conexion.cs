@@ -18,7 +18,7 @@ namespace MongoDB_connection
         // Definir las credenciales y nombre de la base de datos
         static string dbUsername = "admin"; // Nombre de usuario de la base de datos
         static string dbPassword = "admin"; // Contraseña de la base de datos
-        static string dbName = "personas"; // Nombre de tu base de datos
+        static string dbName = "prueba"; // Nombre de tu base de datos
 
         static string port = "27017"; // Puerto por default de Mongo
         static string host = "localhost";
@@ -109,10 +109,72 @@ namespace MongoDB_connection
             }
         }
 
+        // Verificar si estas conectado a la base de datos, si no conectarse
+        public bool verificarConexion()
+        {
+            try
+            {
+                if (!conectado)
+                {
+                    cliente = new MongoClient(uriLocal);
+                    database = cliente.GetDatabase(dbName);
+
+                    conectado = true; // Marca la conexión como activa
+                    return true;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al conectar a la base de datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         // Método para verificar si la conexión está activa
         public bool estaConectado()
         {
             return conectado; // Retorna el estado de la conexión
+        }
+
+        // Consulta
+        public DataTable consulta()
+        {
+            if (!verificarConexion()) return null; // Verificar si está conectado
+            try
+            {
+                var collection = database.GetCollection<BsonDocument>("personas"); // Nombre de la colección
+                var documentos = collection.Find(new BsonDocument()).ToList(); // Obtener todos los documentos
+
+                DataTable tabla = new DataTable();
+
+                // Definir las columnas del DataTable
+                tabla.Columns.Add("Nombre", typeof(string));
+                tabla.Columns.Add("Edad", typeof(int));
+                tabla.Columns.Add("Pais", typeof(string));
+                tabla.Columns.Add("Nit", typeof(string));
+
+                // Llenar el DataTable con los resultados de MongoDB
+                foreach (var documento in documentos)
+                {
+                    DataRow fila = tabla.NewRow();
+
+                    // Verificar si los campos existen antes de acceder a ellos
+                    fila["nombre"] = documento.Contains("nombre") ? documento["nombre"].AsString : string.Empty;
+                    fila["edad"] = documento.Contains("edad") ? documento["edad"].AsInt32 : 0;
+                    fila["pais"] = documento.Contains("pais") ? documento["pais"].AsString : string.Empty;
+                    fila["nit"] = documento.Contains("nit") ? documento["nit"].AsString : string.Empty;
+
+                    tabla.Rows.Add(fila); // Añadir fila al DataTable
+                }
+
+                return tabla;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al realizar la consulta: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
     }
 }
