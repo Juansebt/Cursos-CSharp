@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,14 @@ namespace MongoDB_connection
         static string dbPassword = "admin"; // Contraseña de la base de datos
         static string dbName = "personas"; // Nombre de tu base de datos
 
+        static string port = "27017"; // Puerto por default de Mongo
+        static string host = "localhost";
+
         // URI de conexión a MongoDB, incluye las credenciales de autenticación y el nombre del cluster
-        static string uri = $"mongodb+srv://{dbUsername}:{dbPassword}@cluster0.8seip.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+        static string uri = $"mongodb+srv://{dbUsername}:{dbPassword}@cluster0.8seip.mongodb.net/{dbName}?retryWrites=true&w=majority&appName=Cluster0";
+
+        // URI de conexión para una instancia local de MongoDB
+        static string uriLocal = $"mongodb://{host}:{port}";
 
         // Se almacenan la referencia a la base de datos y el cliente de MongoDB
         private static IMongoDatabase database;
@@ -33,11 +40,12 @@ namespace MongoDB_connection
         {
             try
             {
-                cliente = new MongoClient(uri); // Crea un cliente de MongoDB utilizando la URI con las credenciales
+                cliente = new MongoClient(uriLocal); // Crea un cliente de MongoDB utilizando la URI con las credenciales
                 database = cliente.GetDatabase(dbName); // Conecta a la base de datos especificada por `dbName`
+                var collection = database.GetCollection<BsonDocument>("personas");
 
                 conectado = true; // Marca la conexión como activa
-                MessageBox.Show($"Conexión establecida con éxito a la base de datos: {dbName}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Conexión establecida con éxito a la base de datos: {collection.CollectionNamespace.CollectionName}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -84,6 +92,7 @@ namespace MongoDB_connection
                     cliente = null; // Opcional: liberamos el cliente manualmente
                     database = null; // Liberamos la base de datos
                     MessageBox.Show("Desconectado de la base de datos.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Application.Exit();
                 }
                 else
                 {

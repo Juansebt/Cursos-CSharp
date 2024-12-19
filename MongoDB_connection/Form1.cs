@@ -47,5 +47,11 @@ namespace MongoDB_connection
             conexion.desconectarDataBase(); // Llama al método de la clase Conexion para desconectar de MongoDB
             actualizarEstadoBotones(); // Actualizar el estado de los botones después de desconectar
         }
+
+        private void btnConsultar_Click(object sender, EventArgs e)
+        {
+            // llamar a la función de consulta
+            MessageBox.Show("Esta función aún nonesta disponible...");
+        }
     }
 }
