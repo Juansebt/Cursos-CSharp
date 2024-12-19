@@ -169,6 +169,7 @@ namespace MongoDB_connection
         public DataTable consulta()
         {
             if (!verificarConexion()) return null; // Verifica si la conexión está activa antes de ejecutar la consulta
+
             try
             {
                 var collection = database.GetCollection<BsonDocument>("personas"); // Obtiene la colección 'personas'
@@ -187,6 +188,7 @@ namespace MongoDB_connection
         public DataTable consultaPorNombre(string nombre)
         {
             if (!verificarConexion()) return null; // Verificar si está conectado
+
             try
             {
                 var collection = database.GetCollection<BsonDocument>("personas");
@@ -206,6 +208,7 @@ namespace MongoDB_connection
         public DataTable consultaPorPais(string pais)
         {
             if (!verificarConexion()) return null; // Verificar si está conectado
+
             try
             {
                 var collection = database.GetCollection<BsonDocument>("personas");
@@ -218,6 +221,33 @@ namespace MongoDB_connection
             {
                 MessageBox.Show("Error al realizar la consulta por país: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
+            }
+        }
+
+        public void registrar(string nombre, int edad, string pais, string nit)
+        {
+            if (!verificarConexion()) return;
+
+            try
+            {
+                var collection = database.GetCollection<BsonDocument>("personas");
+
+                // Crear el documento (registro) que vamos a insertar
+                var nuevoDocumento = new BsonDocument
+                {
+                    { "nombre", nombre },
+                    { "edad", edad },
+                    { "pais", pais },
+                    { "nit", nit }
+                };
+                // Insertar el documento en la colección
+                collection.InsertOne(nuevoDocumento);
+
+                MessageBox.Show("Registro insertado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al insertar el registro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

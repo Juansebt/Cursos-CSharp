@@ -13,6 +13,8 @@ namespace MongoDB_connection
 {
     public partial class Form1 : Form
     {
+        private System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip(); // Instancia global de ToolTip en la clase
+
         public Form1()
         {
             InitializeComponent();
@@ -48,10 +50,56 @@ namespace MongoDB_connection
             actualizarEstadoBotones(); // Actualizar el estado de los botones después de desconectar
         }
 
+        private void mostrarToolTip(Control control, string mensaje)
+        {
+            toolTip.ToolTipTitle = "Campo requerido";
+            toolTip.Show(mensaje, control, 0, -20, 3000); // Mostrar el tooltip durante 3 segundos
+            control.Focus(); // Enfocar el control vacío
+        }
+
         public void limpiarCamposFiltro()
         {
             txtNombreConsulta.Clear();
             txtPaisConsulta.Clear();
+        }
+
+        public void limpiarCampos()
+        {
+            txtNombrePersona.Clear();
+            txtEdadPersona.Clear();
+            txtPaisPersona.Clear();
+            txtNitPersona.Clear();
+        }
+
+        public bool validarCamposLlenos()
+        {
+            // Validar que todos los campos estén llenos antes de ejecutar la consulta
+            if (string.IsNullOrWhiteSpace(txtNombrePersona.Text) ||
+                string.IsNullOrWhiteSpace(txtEdadPersona.Text) ||
+                string.IsNullOrWhiteSpace(txtPaisPersona.Text) ||
+                string.IsNullOrWhiteSpace(txtNitPersona.Text))
+            {
+                MessageBox.Show("Todos los campos del formulario deben estar llenos.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
+        private bool validarEdad()
+        {
+            if (string.IsNullOrWhiteSpace(txtEdadPersona.Text))
+            {
+                return true; // Si no hay edad ingresada, no validamos
+            }
+
+            if (!int.TryParse(txtEdadPersona.Text, out _))
+            {
+                MessageBox.Show("La edad debe ser un número entero.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEdadPersona.Focus();
+                return false;
+            }
+
+            return true;
         }
 
         private void btnConsultar_Click(object sender, EventArgs e)
@@ -72,6 +120,17 @@ namespace MongoDB_connection
             {
                 MessageBox.Show("No se pudo realizar la consulta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            if (!validarCamposLlenos()) return;
+            if (!validarEdad()) return;
+
+            conexion.registrar(txtNombrePersona.Text, int.Parse(txtEdadPersona.Text), txtPaisPersona.Text, txtNitPersona.Text);
+
+            dgvConsulta.DataSource = conexion.consulta();
+            limpiarCampos();
         }
     }
 }
